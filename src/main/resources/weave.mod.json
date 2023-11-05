@@ -3,9 +3,9 @@
     "examplemod.mixins.json"
   ],
   "entrypoints": [
-    "com.example.mod.ExampleMod"
+    "com.shtruz.mod.ExampleMod"
   ],
   "hooks": [
-    "com.example.mod.hook.MinecraftHook"
+    "com.shtruz.mod.hook.MinecraftHook"
   ]
 }

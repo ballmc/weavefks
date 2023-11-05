@@ -1,10 +1,10 @@
-package com.example.mod;
+package com.shtruz.mod;
 
 import net.weavemc.loader.api.ModInitializer;
 import net.weavemc.loader.api.command.CommandBus;
 import net.weavemc.loader.api.event.*;
-import com.example.mod.command.TestCommand;
-import com.example.mod.listener.RenderGameOverlayListener;
+import com.shtruz.mod.command.TestCommand;
+import com.shtruz.mod.listener.RenderGameOverlayListener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import org.lwjgl.input.Keyboard;

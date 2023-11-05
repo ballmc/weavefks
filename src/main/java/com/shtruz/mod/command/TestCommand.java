@@ -1,4 +1,4 @@
-package com.example.mod.command;
+package com.shtruz.mod.command;
 
 import net.weavemc.loader.api.command.Command;
 import net.minecraft.client.Minecraft;
