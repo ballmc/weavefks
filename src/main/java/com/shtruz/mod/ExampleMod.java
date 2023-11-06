@@ -15,20 +15,20 @@ public class ExampleMod implements ModInitializer {
     public void preInit() {
         System.out.println("Initializing ExampleMod!");
         ExternalFinalsCounter externalFinalsCounter = ExternalFinalsCounter.getInstance();
-        externalFinalsCounter.initialize("/Users/guru/.weave/mods");
+        externalFinalsCounter.initialize(System.getProperty("user.dir") + "/.weave/mods");
 
         // CommandBus.register(new TestCommand());
         CommandBus.register(new DisplayFinalsCounterCommand());
 
-        EventBus.subscribe(KeyboardEvent.class, e -> {
-            if (Minecraft.getMinecraft().currentScreen == null && e.getKeyState()) {
-                Minecraft.getMinecraft().thePlayer.addChatMessage(
-                        new ChatComponentText("Key Pressed: " + Keyboard.getKeyName(e.getKeyCode()))
-                );
-            }
-        });
-        EventBus.subscribe(RenderHandEvent.class, e -> e.setCancelled(true));
+        // EventBus.subscribe(KeyboardEvent.class, e -> {
+        //     if (Minecraft.getMinecraft().currentScreen == null && e.getKeyState()) {
+        //         Minecraft.getMinecraft().thePlayer.addChatMessage(
+        //                 new ChatComponentText("Key Pressed: " + Keyboard.getKeyName(e.getKeyCode()))
+        //         );
+        //     }
+        // });
+        // EventBus.subscribe(RenderHandEvent.class, e -> e.setCancelled(true));
 
-        EventBus.subscribe(new RenderGameOverlayListener());
+        // EventBus.subscribe(new RenderGameOverlayListener());
     }
 }
