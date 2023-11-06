@@ -95,13 +95,8 @@ public class ExternalFinalsCounter {
         }
     }
 
-    public void addChatComponentText(String text) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
-        Minecraft mc = Minecraft.getMinecraft();
+    public void addChatComponentText(String text) {
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(text));
 
-        Object chatComponentText = chatComponentTextClass
-                .getDeclaredConstructor(String.class)
-                .newInstance(text);
-
-        addChatComponentMessageMethod.invoke(mc.thePlayer, chatComponentText);
     }
 }

@@ -1,6 +1,6 @@
 package com.shtruz.mod.command;
 
-import com.shtruz.externalfinalscounter.ExternalFinalsCounter;
+import com.shtruz.mod.ExternalFinalsCounter;
 import net.weavemc.loader.api.command.Command;
 
 import java.lang.reflect.InvocationTargetException;
