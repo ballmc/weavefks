@@ -1,12 +1,13 @@
-package com.shtruz.externalfinalscounter.finalscounter;
+package com.shtruz.mod.finalscounter;
 
-import com.shtruz.externalfinalscounter.ExternalFinalsCounter;
-
+import com.shtruz.mod.ExternalFinalsCounter;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.settings.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.AbstractMap;
 import java.util.Map;
-
-import static com.shtruz.externalfinalscounter.mapping.Mappings.*;
 
 public class FinalsCounterRenderer {
     private final ExternalFinalsCounter externalFinalsCounter;
@@ -28,12 +29,11 @@ public class FinalsCounterRenderer {
 
     public void render() {
         try {
-            Object minecraft = getMinecraftMethod.invoke(null);
+            Minecraft mc = Minecraft.getMinecraft();
+            boolean inGameHasFocus = mc.inGameHasFocus;
 
-            boolean inGameHasFocus = inGameHasFocusField.getBoolean(minecraft);
-
-            Object gameSettings = gameSettingsField.get(minecraft);
-            boolean showDebugInfo = showDebugInfoField.getBoolean(gameSettings);
+            GameSettings gameSettings = mc.gameSettings;
+            boolean showDebugInfo = gameSettings.showDebugInfo;
 
             if (externalFinalsCounter.getConfig().displayFinalsCounter
                     && !externalFinalsCounter.getChatMessageParser().getAllPlayers().isEmpty()
@@ -47,20 +47,20 @@ public class FinalsCounterRenderer {
                 x /= scale;
                 y /= scale;
 
-                pushMatrixMethod.invoke(null);
+                GlStateManager.pushMatrix();
 
-                scaleMethod.invoke(null, scale, scale, 1.0);
+                GlStateManager.scale(scale, scale, 1.0);
 
-                Object fontRendererObj = fontRendererObjField.get(minecraft);
+                FontRenderer fontRenderer = mc.fontRendererObj;
 
-                drawStringMethod.invoke(fontRendererObj, blue, x, y, -1, false);
-                drawStringMethod.invoke(fontRendererObj, green, x, y + 10, -1, false);
-                drawStringMethod.invoke(fontRendererObj, red, x, y + 20, -1, false);
-                drawStringMethod.invoke(fontRendererObj, yellow, x, y + 30, -1, false);
+                fontRenderer.drawString(blue, x, y, -1, false);
+                fontRenderer.drawString(green, x, y + 10, -1, false);
+                fontRenderer.drawString(red, x, y + 20, -1, false);
+                fontRenderer.drawString(yellow, x, y + 30, -1, false);
 
-                popMatrixMethod.invoke(null);
+                GlStateManager.popMatrix();
             }
-        } catch (InvocationTargetException | IllegalAccessException exception) {
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
     }

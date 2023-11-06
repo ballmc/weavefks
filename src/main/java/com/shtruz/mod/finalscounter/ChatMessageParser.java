@@ -2,7 +2,7 @@ package com.shtruz.mod.finalscounter;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.shtruz.externalfinalscounter.ExternalFinalsCounter;
+import com.shtruz.mod.ExternalFinalsCounter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;

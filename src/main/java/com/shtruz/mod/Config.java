@@ -1,4 +1,4 @@
-package com.shtruz.externalfinalscounter;
+package com.shtruz.mod;
 
 public class Config {
     public boolean displayFinalsCounter = true;

@@ -1,11 +1,11 @@
-package com.shtruz.externalfinalscounter.instrument.transformer.transformers;
+package com.shtruz.mod.hook;
 
 import net.weavemc.loader.api.Hook;
 import org.objectweb.asm.tree.*;
 import org.objectweb.asm.Opcodes;
 
-public class EntityPlayerSPTransformerHook extends Hook {
-    public EntityPlayerSPTransformerHook() {
+public class EntityPlayerSPHook extends Hook {
+    public EntityPlayerSPHook() {
         super("net.minecraft.client.entity.EntityPlayerSP");
     }
 
@@ -17,7 +17,7 @@ public class EntityPlayerSPTransformerHook extends Hook {
 
                 insnList.add(new VarInsnNode(ALOAD, 0)); // Load 'this'
                 insnList.add(new VarInsnNode(ALOAD, 1)); // Load the String argument
-                insnList.add(new MethodInsnNode(INVOKESTATIC, "com/shtruz/externalfinalscounter/ExternalFinalsCounter", "onSendChatMessage", "(Lnet/minecraft/client/entity/EntityPlayerSP;Ljava/lang/String;)Z", false));
+                insnList.add(new MethodInsnNode(INVOKESTATIC, "com/shtruz/mod/ExternalFinalsCounter", "onSendChatMessage", "(Lnet/minecraft/client/entity/EntityPlayerSP;Ljava/lang/String;)Z", false));
 
                 LabelNode ifeq = new LabelNode();
                 insnList.add(new JumpInsnNode(IFEQ, ifeq));

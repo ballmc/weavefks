@@ -1,4 +1,4 @@
-package com.shtruz.externalfinalscounter.command.commands;
+package com.shtruz.mod.command;
 
 import com.shtruz.externalfinalscounter.ExternalFinalsCounter;
 import net.weavemc.loader.api.command.Command;
