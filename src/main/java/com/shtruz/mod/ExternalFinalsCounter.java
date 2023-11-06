@@ -6,6 +6,8 @@ import com.shtruz.mod.finalscounter.ChatMessageParser;
 import com.shtruz.mod.finalscounter.FinalsCounterRenderer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
 
 import javax.swing.*;
 import java.io.BufferedWriter;
@@ -23,12 +25,19 @@ public class ExternalFinalsCounter {
     private File configFile;
     private Config config = new Config();
     private final Gson gson = new Gson();
-
+    
     public ExternalFinalsCounter() {
         instance = this;
     }
 
-    public boolean initialize(Client client, ClassLoader classLoader, String workingDirectory) {
+    public static ExternalFinalsCounter getInstance() {
+        if (instance == null) {
+            instance = new ExternalFinalsCounter();
+        }
+        return instance;
+    }
+
+    public boolean initialize(String workingDirectory) {
         configFile = new File(workingDirectory, "ExternalFinalsCounter.json");
 
         if (configFile.exists()) {
@@ -44,23 +53,23 @@ public class ExternalFinalsCounter {
         return true;
     }
 
-    public void onPrintChatMessage(Object chatComponent) {
-        chatMessageParser.onChat(chatComponent);
-    }
+    // public void onPrintChatMessage(IChatComponent iChatComponent) {
+    //     chatMessageParser.onChat(iChatComponent);
+    // }
 
-    public boolean onSendChatMessage(String message) {
-        message = message.trim();
+    // public boolean onSendChatMessage(String message) {
+    //     message = message.trim();
 
-        if (message.startsWith(".")) {
-            message = message.substring(1);
+    //     if (message.startsWith(".")) {
+    //         message = message.substring(1);
 
-            if (!message.isEmpty()) {
-                return commandManager.executeCommand(message);
-            }
-        }
+    //         if (!message.isEmpty()) {
+    //             return commandManager.executeCommand(message);
+    //         }
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
     public void onRender() {
         finalsCounterRenderer.render();
