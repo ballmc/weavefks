@@ -53,9 +53,10 @@ public class ExternalFinalsCounter {
         return true;
     }
 
-    // public void onPrintChatMessage(IChatComponent iChatComponent) {
-    //     chatMessageParser.onChat(iChatComponent);
-    // }
+    public void onPrintChatMessage(IChatComponent iChatComponent) {
+        chatMessageParser.onChat(iChatComponent);
+        instance.addChatComponentText("onPrintChatMessage");
+    }
 
     // public boolean onSendChatMessage(String message) {
     //     message = message.trim();

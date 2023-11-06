@@ -4,6 +4,8 @@ import net.weavemc.loader.api.Hook;
 import org.objectweb.asm.tree.*;
 import org.objectweb.asm.Opcodes;
 import org.jetbrains.annotations.NotNull;
+import com.shtruz.mod.ExternalFinalsCounter;
+
 
 public class EntityPlayerSPHook extends Hook {
     public EntityPlayerSPHook() {
@@ -30,5 +32,9 @@ public class EntityPlayerSPHook extends Hook {
                 break;
             }
         }
+    }
+    @SuppressWarnings("unused")
+    public static void onStartGame() {
+        System.out.println("sp hook");
     }
 }
