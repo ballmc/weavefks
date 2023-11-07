@@ -38,6 +38,7 @@ public class ExternalFinalsCounter {
     }
 
     public boolean initialize(String workingDirectory) {
+        System.out.println("ExternalFinalsCounter.initialize");
         configFile = new File(workingDirectory, "ExternalFinalsCounter.json");
 
         if (configFile.exists()) {

@@ -2,6 +2,7 @@
   "compatibilityLevel": "JAVA_8",
   "package": "com.shtruz.mod.mixins",
   "mixins": [
-    "MinecraftMixin"
+    "MinecraftMixin",
+    "GuiNewChatMixin"
   ]
 }

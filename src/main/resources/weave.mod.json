@@ -6,7 +6,6 @@
     "com.shtruz.mod.ExampleMod"
   ],
   "hooks": [
-    "com.shtruz.mod.hook.MinecraftHook",
-    "com.shtruz.mod.hook.GuiNewChatHook"
+    "com.shtruz.mod.hook.MinecraftHook"
   ]
 }
