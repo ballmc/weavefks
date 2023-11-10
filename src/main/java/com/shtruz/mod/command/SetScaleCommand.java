@@ -1,46 +1,45 @@
-// package com.shtruz.mod.command;
+package com.shtruz.mod.command;
 
-// import com.shtruz.mod.ExternalFinalsCounter;
-// import net.weavemc.loader.api.command.Command;
+import com.shtruz.mod.ExternalFinalsCounter;
+import net.weavemc.loader.api.command.Command;
+import org.jetbrains.annotations.NotNull;
 
-// import java.lang.reflect.InvocationTargetException;
+public class SetScaleCommand extends Command {
+    public SetScaleCommand() {
+        super("setscale");
+    }
 
-// public class SetScaleCommand extends Command {
-//     public SetScaleCommand() {
-//         super("setscale");
-//     }
-//     @Override
-//     public void execute(ExternalFinalsCounter externalFinalsCounter, String[] args) {
-//         if (args.length != 1) {
-//             return;
-//         }
+    @Override
+    public void handle(@NotNull String[] args) {
+        ExternalFinalsCounter externalFinalsCounter = ExternalFinalsCounter.getInstance();
 
-//         double scale;
+        if (args.length != 1) {
+            return;
+        }
 
-//         try {
-//             scale = Double.parseDouble(args[0]);
-//         } catch (NumberFormatException exception) {
-//             exception.printStackTrace();
-//             return;
-//         }
+        double scale;
 
-//         if (scale <= 0) {
-//             return;
-//         }
+        try {
+            scale = Double.parseDouble(args[0]);
+        } catch (NumberFormatException exception) {
+            exception.printStackTrace();
+            return;
+        }
 
-//         externalFinalsCounter.getConfig().finalsCounterScale = scale;
+        if (scale <= 0) {
+            return;
+        }
 
-//         externalFinalsCounter.saveConfig();
+        externalFinalsCounter.getConfig().finalsCounterScale = scale;
 
-//         try {
-//             String output = "Set scale to " + scale + "%";
+        externalFinalsCounter.saveConfig();
 
-//             externalFinalsCounter.addChatComponentText(output);
-//         } catch (IllegalAccessException
-//                  | InvocationTargetException
-//                  | NoSuchMethodException
-//                  | InstantiationException exception) {
-//             exception.printStackTrace();
-//         }
-//     }
-// }
+        try {
+            String output = "Set scale to " + scale + "%";
+
+            externalFinalsCounter.addChatComponentText(output);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+}

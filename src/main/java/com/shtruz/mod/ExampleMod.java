@@ -15,9 +15,13 @@ public class ExampleMod implements ModInitializer {
     public void preInit() {
         System.out.println("Initializing ExampleMod!");
 
-
-        // CommandBus.register(new TestCommand());
         CommandBus.register(new DisplayFinalsCounterCommand());
+        CommandBus.register(new FinalsCommand());
+        CommandBus.register(new FinalsInTabCommand());
+        CommandBus.register(new PlayerFinalsCommand());
+        CommandBus.register(new ResetFinalsCommand());
+        CommandBus.register(new SetPosCommand());
+        CommandBus.register(new SetScaleCommand());
         EventBus.subscribe(this);
         // EventBus.subscribe(KeyboardEvent.class, e -> {
         //     if (Minecraft.getMinecraft().currentScreen == null && e.getKeyState()) {

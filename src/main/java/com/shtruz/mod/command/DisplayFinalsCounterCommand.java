@@ -16,7 +16,7 @@ public class DisplayFinalsCounterCommand extends Command {
       externalFinalsCounter.saveConfig();
       String output = (externalFinalsCounter.getConfig().displayFinalsCounter ? "Enabled" : "Disabled") + " finals counter HUD";
       externalFinalsCounter.addChatComponentText(output);
-      String workingDirectory = System.getProperty("user.home") + "/.weave/mods";
-      externalFinalsCounter.addChatComponentText("DIR: " + workingDirectory);
+      // String workingDirectory = System.getProperty("user.home") + "/.weave/mods";
+      // externalFinalsCounter.addChatComponentText("DIR: " + workingDirectory);
   }
 }
