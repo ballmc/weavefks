@@ -32,7 +32,7 @@ public class ExampleMod implements ModInitializer {
     public void onGameStart(StartGameEvent e) {
         System.out.println("ExternalFinalsCounter.initialize");
         ExternalFinalsCounter externalFinalsCounter = ExternalFinalsCounter.getInstance();
-        externalFinalsCounter.initialize(System.getProperty("user.dir") + "/.weave/mods");
+        externalFinalsCounter.initialize(System.getProperty("user.home") + "/.weave/mods");
         EventBus.subscribe(new RenderGameOverlayListener());
         System.out.println("Subscribed RenderGameOverlayListener");
     }
