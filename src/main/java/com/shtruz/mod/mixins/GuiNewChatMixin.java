@@ -8,7 +8,7 @@ import com.shtruz.mod.ExternalFinalsCounter;
 
 @Mixin(GuiNewChat.class)
 public class GuiNewChatMixin {
-    @ModifyArg(method = "printChatMessage", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiNewChat;printChatMessageWithOptionalDeletion(Lnet/minecraft/util/IChatComponent;I)V"), index = 1)
+    @Inject(method = "printChatMessage", at = @At("HEAD"))
     private void onPrintChatMessage(IChatComponent chatComponent, CallbackInfo ci) {
         ExternalFinalsCounter.getInstance().onPrintChatMessage(chatComponent);
         System.out.println("GuiNewChatMixin");

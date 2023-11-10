@@ -72,10 +72,10 @@ public class ExternalFinalsCounter {
 
     //     return false;
     // }
-
-    public void onRender() {
-        finalsCounterRenderer.render();
-    }
+    
+    // public void onRender() {
+    //     finalsCounterRenderer.render();
+    // }
 
     public ChatMessageParser getChatMessageParser() {
         return chatMessageParser;

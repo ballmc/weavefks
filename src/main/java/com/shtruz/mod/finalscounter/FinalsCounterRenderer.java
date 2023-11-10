@@ -30,6 +30,7 @@ public class FinalsCounterRenderer {
     public void render() {
         try {
             Minecraft mc = Minecraft.getMinecraft();
+            externalFinalsCounter.addChatComponentText("in render function");
             boolean inGameHasFocus = mc.inGameHasFocus;
 
             GameSettings gameSettings = mc.gameSettings;
