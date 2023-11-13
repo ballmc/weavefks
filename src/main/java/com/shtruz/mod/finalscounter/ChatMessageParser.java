@@ -11,6 +11,8 @@ import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.IChatComponent;
 
+
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -233,6 +235,7 @@ public class ChatMessageParser {
             }
 
             String unformattedText = iChatComponent.getUnformattedText();
+            // externalFinalsCounter.addChatComponentText("GURUS: " + unformattedText);
 
             if (unformattedText.equals("                                 Mega Walls")) {
                 reset();

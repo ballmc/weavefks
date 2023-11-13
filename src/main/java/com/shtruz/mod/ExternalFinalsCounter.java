@@ -9,6 +9,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 
+import net.weavemc.loader.api.event.ChatReceivedEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+
+
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -54,10 +60,20 @@ public class ExternalFinalsCounter {
         return true;
     }
 
-    public void onPrintChatMessage(IChatComponent iChatComponent) {
-        chatMessageParser.onChat(iChatComponent);
-        instance.addChatComponentText("onPrintChatMessage");
-    }
+    // @SubscribeEvent
+    // public void onPrintChatMessage(ChatReceivedEvent e) {
+    //     if (Minecraft.getMinecraft().thePlayer == null) return;
+    //     if (Minecraft.getMinecraft().theWorld == null) return;
+    //     System.out.println("ExternalFinalsCounter.onPrintChatMessage");
+    //     System.out.println("ExternalFinalsCounter.onPrintChatMessage: " + e.getMessage());
+    //     chatMessageParser.onChat(e.getMessage());
+    //     instance.addChatComponentText("onPrintChatMessage");
+    // }
+
+    // public void onPrintChatMessage(IChatComponent iChatComponent, int chatLineId, CallbackInfo ci) {
+    //     chatMessageParser.onChat(iChatComponent);
+    //     instance.addChatComponentText("onPrintChatMessage");
+    // }
 
     // public boolean onSendChatMessage(String message) {
     //     message = message.trim();
