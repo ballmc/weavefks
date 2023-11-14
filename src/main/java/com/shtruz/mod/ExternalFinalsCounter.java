@@ -123,7 +123,12 @@ public class ExternalFinalsCounter {
     }
 
     public void addChatComponentText(String text) {
+        if (Minecraft.getMinecraft().thePlayer == null) return;
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(text));
+    }
 
+    public void sendMessage(String message) {
+        if (Minecraft.getMinecraft().thePlayer == null) return;
+        Minecraft.getMinecraft().thePlayer.sendChatMessage(message);
     }
 }

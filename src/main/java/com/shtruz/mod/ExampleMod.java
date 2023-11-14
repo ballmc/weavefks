@@ -22,27 +22,19 @@ public class ExampleMod implements ModInitializer {
         CommandBus.register(new FinalsInTabCommand());
         CommandBus.register(new PlayerFinalsCommand());
         CommandBus.register(new ResetFinalsCommand());
+        CommandBus.register(new SayFks());
         CommandBus.register(new SetPosCommand());
         CommandBus.register(new SetScaleCommand());
         EventBus.subscribe(this);
-        // EventBus.subscribe(KeyboardEvent.class, e -> {
-        //     if (Minecraft.getMinecraft().currentScreen == null && e.getKeyState()) {
-        //         Minecraft.getMinecraft().thePlayer.addChatMessage(
-        //                 new ChatComponentText("Key Pressed: " + Keyboard.getKeyName(e.getKeyCode()))
-        //         );
-        //     }
-        // });
-        // EventBus.subscribe(RenderHandEvent.class, e -> e.setCancelled(true));
         EventBus.subscribe(ChatReceivedEvent.class, e -> {
             chatMessageParser.onChat(e.getMessage());
         });
     }
     @SubscribeEvent
     public void onGameStart(StartGameEvent e) {
-        System.out.println("ExternalFinalsCounter.initialize");
+        System.out.println("Game started!");
         ExternalFinalsCounter externalFinalsCounter = ExternalFinalsCounter.getInstance();
         externalFinalsCounter.initialize(System.getProperty("user.home") + "/.weave/mods");
         EventBus.subscribe(new RenderGameOverlayListener());
-        System.out.println("Subscribed RenderGameOverlayListener");
     }
 }
