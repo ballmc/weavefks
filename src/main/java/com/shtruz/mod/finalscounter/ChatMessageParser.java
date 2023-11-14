@@ -228,14 +228,15 @@ public class ChatMessageParser {
             if (mc.getCurrentServerData() == null) {
                 return;
             }
-
+            
             String serverIP = mc.getCurrentServerData().serverIP;
             if (!serverIP.toLowerCase().endsWith("hypixel.net")) {
                 return;
             }
+            
+            externalFinalsCounter.getFinalsCounterRenderer().update();
 
             String unformattedText = iChatComponent.getUnformattedText();
-            // externalFinalsCounter.addChatComponentText("GURUS: " + unformattedText);
 
             if (unformattedText.equals("                                 Mega Walls")) {
                 reset();

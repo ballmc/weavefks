@@ -37,7 +37,6 @@ public class FinalsCounterRenderer {
             boolean showDebugInfo = gameSettings.showDebugInfo;
 
             if (externalFinalsCounter.getConfig().displayFinalsCounter
-                    && !externalFinalsCounter.getChatMessageParser().getAllPlayers().isEmpty()
                     && inGameHasFocus
                     && !showDebugInfo) {
                 float x = externalFinalsCounter.getConfig().finalsCounterX;
