@@ -6,25 +6,41 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.*;
 import java.lang.reflect.InvocationTargetException;
-import java.util.AbstractMap;
-import java.util.Map;
+import java.util.*;
 
 public class FinalsCounterRenderer {
     private final ExternalFinalsCounter externalFinalsCounter;
-    private String blue = "";
-    private String green = "";
-    private String red = "";
-    private String yellow = "";
+    private final Map<String, String> teamStrings = new HashMap<>();
 
     public FinalsCounterRenderer(ExternalFinalsCounter externalFinalsCounter) {
         this.externalFinalsCounter = externalFinalsCounter;
     }
 
     public void update() {
-        blue = printTeam("Blue", externalFinalsCounter.getChatMessageParser().getBluePrefix(), externalFinalsCounter.getChatMessageParser().getBlue());
-        green = printTeam("Green", externalFinalsCounter.getChatMessageParser().getGreenPrefix(), externalFinalsCounter.getChatMessageParser().getGreen());
-        red = printTeam("Red", externalFinalsCounter.getChatMessageParser().getRedPrefix(), externalFinalsCounter.getChatMessageParser().getRed());
-        yellow = printTeam("Yellow", externalFinalsCounter.getChatMessageParser().getYellowPrefix(), externalFinalsCounter.getChatMessageParser().getYellow());
+        // Put the strings into a HashMap
+        Map<String, Map<String, Integer>> teamData = new HashMap<>();
+        teamData.put("Blue", externalFinalsCounter.getChatMessageParser().getBlue());
+        teamData.put("Green", externalFinalsCounter.getChatMessageParser().getGreen());
+        teamData.put("Red", externalFinalsCounter.getChatMessageParser().getRed());
+        teamData.put("Yellow", externalFinalsCounter.getChatMessageParser().getYellow());
+
+        // Sort the HashMap based on most finals
+        List<Map.Entry<String, Map<String, Integer>>> sortedTeams = new ArrayList<>(teamData.entrySet());
+        sortedTeams.sort(Comparator.comparing(entry ->
+                entry.getValue()
+                        .values()
+                        .stream()
+                        .mapToInt(Integer::intValue)
+                        .sum(),
+                Comparator.reverseOrder()));
+
+        // Update teamStrings based on the sorted order
+        teamStrings.clear();
+        for (Map.Entry<String, Map<String, Integer>> entry : sortedTeams) {
+            String teamName = entry.getKey();
+            String teamString = printTeam(teamName, getPrefix(teamName), entry.getValue());
+            teamStrings.put(teamName, teamString);
+        }
     }
 
     public void render() {
@@ -53,10 +69,13 @@ public class FinalsCounterRenderer {
 
                 FontRenderer fontRenderer = mc.fontRendererObj;
 
-                fontRenderer.drawString(blue, x, y, -1, false);
-                fontRenderer.drawString(green, x, y + 10, -1, false);
-                fontRenderer.drawString(red, x, y + 20, -1, false);
-                fontRenderer.drawString(yellow, x, y + 30, -1, false);
+                // Iterate over the sorted team order
+                for (Map.Entry<String, String> entry : teamStrings.entrySet()) {
+                    String teamName = entry.getKey();
+                    String teamString = entry.getValue();
+                    fontRenderer.drawString(teamString, x, y, -1, false);
+                    y += 10; // Adjust the spacing between teams as needed
+                }
 
                 GlStateManager.popMatrix();
             }
@@ -82,5 +101,20 @@ public class FinalsCounterRenderer {
                 + "(" + finals + ") - "
                 + highestFinalsPlayer.getKey()
                 + " (" + highestFinalsPlayer.getValue() + ")";
+    }
+
+    private String getPrefix(String teamName) {
+        switch (teamName) {
+            case "Blue":
+                return externalFinalsCounter.getChatMessageParser().getBluePrefix();
+            case "Green":
+                return externalFinalsCounter.getChatMessageParser().getGreenPrefix();
+            case "Red":
+                return externalFinalsCounter.getChatMessageParser().getRedPrefix();
+            case "Yellow":
+                return externalFinalsCounter.getChatMessageParser().getYellowPrefix();
+            default:
+                return "";
+        }
     }
 }

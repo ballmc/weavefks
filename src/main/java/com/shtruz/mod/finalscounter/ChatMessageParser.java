@@ -23,75 +23,92 @@ import java.util.stream.Collectors;
 public class ChatMessageParser {
     private final ExternalFinalsCounter externalFinalsCounter;
     private static final String[] KILL_MESSAGES = {
-        " was hit by a flying bunny by ",
-        " was hit by a bunny thrown by ",
-        " was turned into a carrot by ",
-        " was hit by a carrot from ",
-        " was bitten by a bunny from ",
-        " was magically turned into a bunny by ",
-        " was fed to a bunny by ",
-        " was shot and killed by ",
-        " was snowballed to death by ",
-        " was killed by ",
-        " was killed with a potion by ",
-        " was killed with an explosion by ",
-        " was killed with magic by ",
-        " was filled full of lead by ",
-        " was iced by ",
-        " met their end by ",
-        " lost a drinking contest with ",
-        " was killed with dynamite by ",
-        " lost the draw to ",
-        " was struck down by ",
-        " was turned to dust by ",
-        " was turned to ash by ",
-        " was melted by ",
-        " was incinerated by ",
-        " was vaporized by ",
-        " was struck with Cupid's arrow by ",
-        " was given the cold shoulder by ",
-        " was hugged too hard by ",
-        " drank a love potion from ",
-        " was hit by a love bomb from ",
-        " was no match for ",
-        " was smote from afar by ",
-        " was justly ended by ",
-        " was purified by ",
-        " was killed with holy water by ",
-        " was dealt vengeful justice by ",
-        " was returned to dust by ",
-        " be shot and killed by ",
-        " be snowballed to death by ",
-        " be sent to Davy Jones' locker by ",
-        " be killed with rum by ",
-        " be killed with rum by ",
-        " be shot with cannon by ",
-        " be killed with magic by ",
-        " was glazed in BBQ sauce by ",
-        " was sprinkled with chilli powder by ",
-        " was sliced up by ",
-        " was overcooked by ",
-        " was deep fried by ",
-        " was boiled by ",
-        " was injected with malware by ",
-        " was DDoS'd by ",
-        " was deleted by ",
-        " was purged by an antivirus owned by ",
-        " was fragmented by ",
-        " was corrupted by ",
-        " was squeaked from a distance by ",
-        " was hit by frozen cheese from ",
-        " was chewed up by ",
-        " was chemically cheesed by ",
-        " was turned into cheese whiz by ",
-        " was magically squeaked by ",
-        " got banana pistol'd by ",
-        " was peeled by ",
-        " was mushed by ",
-        " was hit by a banana split from ",
-        " was killed by an explosive banana from ",
-        " was killed by a magic banana from ",
-        " was turned into mush by " };
+        /*Banana messages, put those messages at the top to not conflict with the other pattern (\w{1,16}) was killed by (\w{1,16})*/
+        "(\\w{1,16}) got banana pistol'd by (\\w{1,16}).*",
+        "(\\w{1,16}) was peeled by (\\w{1,16}).*",
+        "(\\w{1,16}) was mushed by (\\w{1,16}).*",
+        "(\\w{1,16}) was hit by a banana split from (\\w{1,16}).*",
+        "(\\w{1,16}) was killed by an explosive banana from (\\w{1,16}).*",
+        "(\\w{1,16}) was killed by a magic banana from (\\w{1,16}).*",
+        "(\\w{1,16}) was turned into mush by (\\w{1,16}).*",
+        /*Default messages*/
+        "(\\w{1,16}) was shot and killed by (\\w{1,16}).*",
+        "(\\w{1,16}) was snowballed to death by (\\w{1,16}).*",
+        "(\\w{1,16}) was killed by (\\w{1,16}).*",
+        "(\\w{1,16}) was killed with a potion by (\\w{1,16}).*",
+        "(\\w{1,16}) was killed with an explosion by (\\w{1,16}).*",
+        "(\\w{1,16}) was killed with magic by (\\w{1,16}).*",
+        /*Western messages*/
+        "(\\w{1,16}) was filled full of lead by (\\w{1,16}).*",
+        "(\\w{1,16}) was iced by (\\w{1,16}).*",
+        "(\\w{1,16}) met their end by (\\w{1,16}).*",
+        "(\\w{1,16}) lost a drinking contest with (\\w{1,16}).*",
+        "(\\w{1,16}) was killed with dynamite by (\\w{1,16}).*",
+        "(\\w{1,16}) lost the draw to (\\w{1,16}).*",
+        /*Fire messages*/
+        "(\\w{1,16}) was struck down by (\\w{1,16}).*",
+        "(\\w{1,16}) was turned to dust by (\\w{1,16}).*",
+        "(\\w{1,16}) was turned to ash by (\\w{1,16}).*",
+        "(\\w{1,16}) was melted by (\\w{1,16}).*",
+        "(\\w{1,16}) was incinerated by (\\w{1,16}).*",
+        "(\\w{1,16}) was vaporized by (\\w{1,16}).*",
+        /*Love messages*/
+        "(\\w{1,16}) was struck with Cupid's arrow by (\\w{1,16}).*",
+        "(\\w{1,16}) was given the cold shoulder by (\\w{1,16}).*",
+        "(\\w{1,16}) was hugged too hard by (\\w{1,16}).*",
+        "(\\w{1,16}) drank a love potion from (\\w{1,16}).*",
+        "(\\w{1,16}) was hit by a love bomb from (\\w{1,16}).*",
+        "(\\w{1,16}) was no match for (\\w{1,16}).*",
+        /*Paladin messages*/
+        "(\\w{1,16}) was smote from afar by (\\w{1,16}).*",
+        "(\\w{1,16}) was justly ended by (\\w{1,16}).*",
+        "(\\w{1,16}) was purified by (\\w{1,16}).*",
+        "(\\w{1,16}) was killed with holy water by (\\w{1,16}).*",
+        "(\\w{1,16}) was dealt vengeful justice by (\\w{1,16}).*",
+        "(\\w{1,16}) was returned to dust by (\\w{1,16}).*",
+        /*Pirate messages*/
+        "(\\w{1,16}) be shot and killed by (\\w{1,16}).*",
+        "(\\w{1,16}) be snowballed to death by (\\w{1,16}).*",
+        "(\\w{1,16}) be sent to Davy Jones' locker by (\\w{1,16}).*",
+        "(\\w{1,16}) be killed with rum by (\\w{1,16}).*",
+        "(\\w{1,16}) be shot with cannon by (\\w{1,16}).*",
+        "(\\w{1,16}) be killed with magic by (\\w{1,16}).*",
+        /*BBQ messages*/
+        "(\\w{1,16}) was glazed in BBQ sauce by (\\w{1,16}).*",
+        "(\\w{1,16}) was sprinkled with chilli powder by (\\w{1,16}).*",
+        "(\\w{1,16}) was sliced up by (\\w{1,16}).*",
+        "(\\w{1,16}) was overcooked by (\\w{1,16}).*",
+        "(\\w{1,16}) was deep fried by (\\w{1,16}).*",
+        "(\\w{1,16}) was boiled by (\\w{1,16}).*",
+        /*Squeak messages*/
+        "(\\w{1,16}) was squeaked from a distance by (\\w{1,16}).*",
+        "(\\w{1,16}) was hit by frozen cheese from (\\w{1,16}).*",
+        "(\\w{1,16}) was chewed up by (\\w{1,16}).*",
+        "(\\w{1,16}) was chemically cheesed by (\\w{1,16}).*",
+        "(\\w{1,16}) was turned into cheese whiz by (\\w{1,16}).*",
+        "(\\w{1,16}) was magically squeaked by (\\w{1,16}).*",
+        /*Bunny messages*/
+        "(\\w{1,16}) was hit by a flying bunny by (\\w{1,16}).*",
+        "(\\w{1,16}) was hit by a bunny thrown by (\\w{1,16}).*",
+        "(\\w{1,16}) was turned into a carrot by (\\w{1,16}).*",
+        "(\\w{1,16}) was hit by a carrot from (\\w{1,16}).*",
+        "(\\w{1,16}) was bitten by a bunny from (\\w{1,16}).*",
+        "(\\w{1,16}) was magically turned into a bunny by (\\w{1,16}).*",
+        "(\\w{1,16}) was fed to a bunny by (\\w{1,16}).*",
+        /*Natural deaths messages*/
+        "(\\w{1,16}) starved to death\\.",
+        "(\\w{1,16}) hit the ground too hard\\.",
+        "(\\w{1,16}) blew up\\.",
+        "(\\w{1,16}) exploded\\.",
+        "(\\w{1,16}) tried to swim in lava\\.",
+        "(\\w{1,16}) went up in flames\\.",
+        "(\\w{1,16}) burned to death\\.",
+        "(\\w{1,16}) suffocated in a wall\\.",
+        "(\\w{1,16}) suffocated\\.",
+        "(\\w{1,16}) fell out of the world\\.",
+        "(\\w{1,16}) had a block fall on them\\.",
+        "(\\w{1,16}) drowned\\.",
+        "(\\w{1,16}) died from a cactus\\." };
     private final Map<String, Integer> allPlayers = new HashMap<>();
     private final Map<String, Integer> blue = new HashMap<>();
     private final Map<String, Integer> green = new HashMap<>();
@@ -106,9 +123,14 @@ public class ChatMessageParser {
     private boolean greenWitherDead = false;
     private boolean redWitherDead = false;
     private boolean yellowWitherDead = false;
+    private static Pattern[] KILL_PATTERNS;
 
     public ChatMessageParser(ExternalFinalsCounter externalFinalsCounter) {
         this.externalFinalsCounter = externalFinalsCounter;
+        KILL_PATTERNS = new Pattern[KILL_MESSAGES.length];
+        for (int i = 0; i < KILL_MESSAGES.length; i++) {
+            KILL_PATTERNS[i] = Pattern.compile(KILL_MESSAGES[i]);
+        }
     }
 
     public Map<String, Integer> getAllPlayers() {
@@ -265,10 +287,10 @@ public class ChatMessageParser {
                 return;
             }
 
-            for (String killMessage : KILL_MESSAGES) {
-                Matcher matcher = Pattern.compile("(\\w+)" + killMessage + "(\\w+)").matcher(unformattedText);
+            for (Pattern pattern : KILL_PATTERNS) {
+                Matcher matcher = pattern.matcher(unformattedText);
 
-                if (matcher.lookingAt()) {
+                if (matcher.matches()) {
                     for (String line : getScoreboardLines()) {
                         if (line.contains("[B]")) {
                             bluePrefix = line.substring(0, 2);
@@ -285,46 +307,72 @@ public class ChatMessageParser {
                         }
                     }
 
-                    String killed = matcher.group(1);
-                    String killer = matcher.group(2);
+                    if (matcher.groupCount() == 2) {
+                        String killed = matcher.group(1);
+                        String killer = matcher.group(2);
 
-                    String formattedText = iChatComponent.getFormattedText();
+                        String formattedText = iChatComponent.getFormattedText();
 
-                    String killedPrefix = formattedText.substring(formattedText.indexOf(killed) - 2, formattedText.indexOf(killed));
-                    String killerPrefix = formattedText.substring(formattedText.indexOf(killer) - 2, formattedText.indexOf(killer));
+                        String killedPrefix = formattedText.substring(formattedText.indexOf(killed) - 2, formattedText.indexOf(killed));
+                        String killerPrefix = formattedText.substring(formattedText.indexOf(killer) - 2, formattedText.indexOf(killer));
 
-                    if (killedPrefix.equals(bluePrefix) && blueWitherDead) {
-                        blue.remove(killed);
-                    } else if (killedPrefix.equals(greenPrefix) && greenWitherDead) {
-                        green.remove(killed);
-                    } else if (killedPrefix.equals(redPrefix) && redWitherDead) {
-                        red.remove(killed);
-                    } else if (killedPrefix.equals(yellowPrefix) && yellowWitherDead) {
-                        yellow.remove(killed);
-                    } else {
-                        return;
-                    }
-
-                    allPlayers.remove(killed);
-                    deadPlayers.add(killed);
-
-                    if (!killed.equals(killer) && !deadPlayers.contains(killer)) {
-                        if (killerPrefix.equals(bluePrefix)) {
-                            blue.put(killer, blue.getOrDefault(killer, 0) + 1);
-                        } else if (killerPrefix.equals(greenPrefix)) {
-                            green.put(killer, green.getOrDefault(killer, 0) + 1);
-                        } else if (killerPrefix.equals(redPrefix)) {
-                            red.put(killer, red.getOrDefault(killer, 0) + 1);
-                        } else if (killerPrefix.equals(yellowPrefix)) {
-                            yellow.put(killer, yellow.getOrDefault(killer, 0) + 1);
+                        if (killedPrefix.equals(bluePrefix) && blueWitherDead) {
+                            blue.remove(killed);
+                        } else if (killedPrefix.equals(greenPrefix) && greenWitherDead) {
+                            green.remove(killed);
+                        } else if (killedPrefix.equals(redPrefix) && redWitherDead) {
+                            red.remove(killed);
+                        } else if (killedPrefix.equals(yellowPrefix) && yellowWitherDead) {
+                            yellow.remove(killed);
+                        } else {
+                            return;
                         }
 
-                        allPlayers.put(killer, allPlayers.getOrDefault(killer, 0) + 1);
+                        allPlayers.remove(killed);
+                        deadPlayers.add(killed);
+
+                        if (!killed.equals(killer) && !deadPlayers.contains(killer)) {
+                            if (killerPrefix.equals(bluePrefix)) {
+                                blue.put(killer, blue.getOrDefault(killer, 0) + 1);
+                            } else if (killerPrefix.equals(greenPrefix)) {
+                                green.put(killer, green.getOrDefault(killer, 0) + 1);
+                            } else if (killerPrefix.equals(redPrefix)) {
+                                red.put(killer, red.getOrDefault(killer, 0) + 1);
+                            } else if (killerPrefix.equals(yellowPrefix)) {
+                                yellow.put(killer, yellow.getOrDefault(killer, 0) + 1);
+                            }
+
+                            allPlayers.put(killer, allPlayers.getOrDefault(killer, 0) + 1);
+                        }
+
+                        externalFinalsCounter.getFinalsCounterRenderer().update();
+                        return;
                     }
+                    if (matcher.groupCount() == 1) {
+                        String killed = matcher.group(1);
 
-                    externalFinalsCounter.getFinalsCounterRenderer().update();
+                        String formattedText = iChatComponent.getFormattedText();
 
-                    return;
+                        String killedPrefix = formattedText.substring(formattedText.indexOf(killed) - 2, formattedText.indexOf(killed));
+
+                        if (killedPrefix.equals(bluePrefix) && blueWitherDead) {
+                            blue.remove(killed);
+                        } else if (killedPrefix.equals(greenPrefix) && greenWitherDead) {
+                            green.remove(killed);
+                        } else if (killedPrefix.equals(redPrefix) && redWitherDead) {
+                            red.remove(killed);
+                        } else if (killedPrefix.equals(yellowPrefix) && yellowWitherDead) {
+                            yellow.remove(killed);
+                        } else {
+                            return;
+                        }
+
+                        allPlayers.remove(killed);
+                        deadPlayers.add(killed);
+
+                        externalFinalsCounter.getFinalsCounterRenderer().update();
+                        return;
+                    }
                 }
             }
         } catch (Exception exception) {
