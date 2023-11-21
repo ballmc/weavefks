@@ -246,29 +246,23 @@ public class ChatMessageParser {
     public void onChat(IChatComponent iChatComponent) {
         try {
             Minecraft mc = Minecraft.getMinecraft();
-
             if (mc.getCurrentServerData() == null) {
                 return;
             }
-            
             String serverIP = mc.getCurrentServerData().serverIP;
             if (!serverIP.toLowerCase().endsWith("hypixel.net")) {
                 return;
             }
-            
             externalFinalsCounter.getFinalsCounterRenderer().update();
-
             String unformattedText = iChatComponent.getUnformattedText();
 
             if (unformattedText.equals("                                 Mega Walls")) {
                 reset();
                 return;
             }
-
             if (mc.theWorld == null) {
                 return;
             }
-
             Scoreboard scoreboard = mc.theWorld.getScoreboard();
 
             if (scoreboard == null) {

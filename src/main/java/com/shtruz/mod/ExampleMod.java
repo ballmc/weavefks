@@ -26,13 +26,14 @@ public class ExampleMod implements ModInitializer {
         CommandBus.register(new SetPosCommand());
         CommandBus.register(new SetScaleCommand());
         EventBus.subscribe(this);
+        System.out.println("Registered commands!");
         EventBus.subscribe(ChatReceivedEvent.class, e -> {
             chatMessageParser.onChat(e.getMessage());
         });
     }
     @SubscribeEvent
     public void onGameStart(StartGameEvent e) {
-        System.out.println("Game started!");
+        System.out.println("Game started weave!");
         ExternalFinalsCounter externalFinalsCounter = ExternalFinalsCounter.getInstance();
         externalFinalsCounter.initialize(System.getProperty("user.home") + "/.weave/mods");
         EventBus.subscribe(new RenderGameOverlayListener());

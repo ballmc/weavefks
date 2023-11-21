@@ -7,41 +7,88 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.stream.Collectors; 
+
 
 public class FinalsCounterRenderer {
     private final ExternalFinalsCounter externalFinalsCounter;
-    private final Map<String, String> teamStrings = new HashMap<>();
+    private final Map<String, String> teamStrings = new LinkedHashMap<>();
 
     public FinalsCounterRenderer(ExternalFinalsCounter externalFinalsCounter) {
         this.externalFinalsCounter = externalFinalsCounter;
     }
 
     public void update() {
-        // Put the strings into a HashMap
-        Map<String, Map<String, Integer>> teamData = new HashMap<>();
+        // Put the strings into a LinkedHashMap to maintain the order of insertion
+        LinkedHashMap<String, Map<String, Integer>> teamData = new LinkedHashMap<>();
         teamData.put("Blue", externalFinalsCounter.getChatMessageParser().getBlue());
         teamData.put("Green", externalFinalsCounter.getChatMessageParser().getGreen());
         teamData.put("Red", externalFinalsCounter.getChatMessageParser().getRed());
         teamData.put("Yellow", externalFinalsCounter.getChatMessageParser().getYellow());
 
-        // Sort the HashMap based on most finals
-        List<Map.Entry<String, Map<String, Integer>>> sortedTeams = new ArrayList<>(teamData.entrySet());
-        sortedTeams.sort(Comparator.comparing(entry ->
+        LinkedHashMap<String, Map<String, Integer>> sortedTeams = sortByValues(teamData);
+    
+        // Update teamStrings based on the sorted order
+        teamStrings.clear();
+        for (Map.Entry<String, Map<String, Integer>> entry : sortedTeams.entrySet()) {
+            String teamName = entry.getKey();
+            String teamString = printTeam(teamName, getPrefix(teamName), entry.getValue());
+            teamStrings.put(teamName, teamString);
+        }
+    }
+
+    private static LinkedHashMap<String, Map<String, Integer>> sortByValues(Map<String, Map<String, Integer>> map) {
+        List<Map.Entry<String, Map<String, Integer>>> entries = new LinkedList<>(map.entrySet());
+    
+        Collections.sort(entries, Comparator.comparing(entry ->
                 entry.getValue()
                         .values()
                         .stream()
                         .mapToInt(Integer::intValue)
                         .sum(),
                 Comparator.reverseOrder()));
-
-        // Update teamStrings based on the sorted order
-        teamStrings.clear();
-        for (Map.Entry<String, Map<String, Integer>> entry : sortedTeams) {
-            String teamName = entry.getKey();
-            String teamString = printTeam(teamName, getPrefix(teamName), entry.getValue());
-            teamStrings.put(teamName, teamString);
+    
+        LinkedHashMap<String, Map<String, Integer>> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Map<String, Integer>> entry : entries) {
+            sortedMap.put(entry.getKey(), entry.getValue());
         }
+    
+        return sortedMap;
     }
+
+    // public void update() {
+    //     // Creating a LinkedHashMap to maintain the order of insertion
+    //     LinkedHashMap<String, Integer> teamData = new LinkedHashMap<>();
+    //     teamData.put("Blue", 1);
+    //     teamData.put("Green", 2);
+    //     teamData.put("Red", 2);
+    //     teamData.put("Yellow", 4);
+
+    //     // Sorting the map by values in descending order
+    //     LinkedHashMap<String, Integer> sortedTeamData = sortByValues(teamData);
+
+    //     // Update teamStrings based on the sorted order
+    //     for (Map.Entry<String, Integer> entry : sortedTeamData.entrySet()) {
+    //         String teamName = entry.getKey();
+    //         String teamString = printTeam(teamName, getPrefix(teamName), Collections.singletonMap("finals", entry.getValue()));
+    //         teamStrings.put(teamName, teamString);
+    //     }
+    // }
+
+    // private LinkedHashMap<String, Integer> sortByValues(Map<String, Integer> map) {
+    //     List<Map.Entry<String, Integer>> entries = new LinkedList<>(map.entrySet());
+
+    //     // Custom comparator to sort by values in descending order
+    //     Collections.sort(entries, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+
+    //     // Creating a new LinkedHashMap to maintain the order of insertion
+    //     LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
+    //     for (Map.Entry<String, Integer> entry : entries) {
+    //         sortedMap.put(entry.getKey(), entry.getValue());
+    //     }
+
+    //     return sortedMap;
+    // }
 
     public void render() {
         try {
@@ -74,6 +121,7 @@ public class FinalsCounterRenderer {
                     String teamName = entry.getKey();
                     String teamString = entry.getValue();
                     fontRenderer.drawString(teamString, x, y, -1, false);
+                    // System.out.println("teamName: " + teamName + ", teamString: " + teamString + ", x: " + x + ", y: " + y);
                     y += 10; // Adjust the spacing between teams as needed
                 }
 
