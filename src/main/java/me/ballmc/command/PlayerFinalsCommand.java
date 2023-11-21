@@ -1,6 +1,6 @@
-package com.shtruz.mod.command;
+package me.ballmc.weavefks.command;
 
-import com.shtruz.mod.ExternalFinalsCounter;
+import me.ballmc.weavefks.WeaveFks;
 import net.weavemc.loader.api.command.Command;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,10 +16,10 @@ public class PlayerFinalsCommand extends Command {
 
     @Override
     public void handle(@NotNull String[] args) {
-        ExternalFinalsCounter externalFinalsCounter = ExternalFinalsCounter.getInstance();
+        WeaveFks weavefks = WeaveFks.getInstance();
 
         try {
-            Map<String, Integer> reverseSortedMap = externalFinalsCounter.getChatMessageParser().getAllPlayers()
+            Map<String, Integer> reverseSortedMap = weavefks.getChatMessageParser().getAllPlayers()
                     .entrySet()
                     .stream()
                     .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
@@ -35,14 +35,14 @@ public class PlayerFinalsCommand extends Command {
             for (Map.Entry<String, Integer> entry : reverseSortedMap.entrySet()) {
                 String prefix = "";
 
-                if (externalFinalsCounter.getChatMessageParser().getBlue().containsKey(entry.getKey())) {
-                    prefix = externalFinalsCounter.getChatMessageParser().getBluePrefix();
-                } else if (externalFinalsCounter.getChatMessageParser().getGreen().containsKey(entry.getKey())) {
-                    prefix = externalFinalsCounter.getChatMessageParser().getGreenPrefix();
-                } else if (externalFinalsCounter.getChatMessageParser().getRed().containsKey(entry.getKey())) {
-                    prefix = externalFinalsCounter.getChatMessageParser().getRedPrefix();
-                } else if (externalFinalsCounter.getChatMessageParser().getYellow().containsKey(entry.getKey())) {
-                    prefix = externalFinalsCounter.getChatMessageParser().getYellowPrefix();
+                if (weavefks.getChatMessageParser().getBlue().containsKey(entry.getKey())) {
+                    prefix = weavefks.getChatMessageParser().getBluePrefix();
+                } else if (weavefks.getChatMessageParser().getGreen().containsKey(entry.getKey())) {
+                    prefix = weavefks.getChatMessageParser().getGreenPrefix();
+                } else if (weavefks.getChatMessageParser().getRed().containsKey(entry.getKey())) {
+                    prefix = weavefks.getChatMessageParser().getRedPrefix();
+                } else if (weavefks.getChatMessageParser().getYellow().containsKey(entry.getKey())) {
+                    prefix = weavefks.getChatMessageParser().getYellowPrefix();
                 }
 
                 stringBuilder.append(i).append(". ").append(prefix).append(entry.getKey()).append(": ").append("\u00A7f").append(entry.getValue()).append("\n");
@@ -53,7 +53,7 @@ public class PlayerFinalsCommand extends Command {
                 stringBuilder.replace(stringBuilder.lastIndexOf("\n"), stringBuilder.lastIndexOf("\n") + 1, "");
             }
 
-            externalFinalsCounter.addChatComponentText(stringBuilder.toString());
+            weavefks.addChatComponentText(stringBuilder.toString());
         } catch (Exception exception) {
             exception.printStackTrace();
         }

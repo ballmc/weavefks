@@ -1,8 +1,8 @@
-package com.shtruz.mod.finalscounter;
+package me.ballmc.weavefks.finalscounter;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.shtruz.mod.ExternalFinalsCounter;
+import me.ballmc.weavefks.WeaveFks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 
 public class ChatMessageParser {
-    private final ExternalFinalsCounter externalFinalsCounter;
+    private final WeaveFks weavefks;
     private static final String[] KILL_MESSAGES = {
         /*Banana messages, put those messages at the top to not conflict with the other pattern (\w{1,16}) was killed by (\w{1,16})*/
         "(\\w{1,16}) got banana pistol'd by (\\w{1,16}).*",
@@ -125,8 +125,8 @@ public class ChatMessageParser {
     private boolean yellowWitherDead = false;
     private static Pattern[] KILL_PATTERNS;
 
-    public ChatMessageParser(ExternalFinalsCounter externalFinalsCounter) {
-        this.externalFinalsCounter = externalFinalsCounter;
+    public ChatMessageParser(WeaveFks weavefks) {
+        this.weavefks = weavefks;
         KILL_PATTERNS = new Pattern[KILL_MESSAGES.length];
         for (int i = 0; i < KILL_MESSAGES.length; i++) {
             KILL_PATTERNS[i] = Pattern.compile(KILL_MESSAGES[i]);
@@ -170,7 +170,7 @@ public class ChatMessageParser {
     }
 
     public String getFinalsInTabString(String playerName) {
-        if (externalFinalsCounter.getConfig().finalsInTab) {
+        if (weavefks.getConfig().finalsInTab) {
             if (allPlayers.containsKey(playerName)) {
                 return " " + "\u00A7e" + allPlayers.get(playerName);
             }
@@ -191,7 +191,7 @@ public class ChatMessageParser {
         redWitherDead = false;
         yellowWitherDead = false;
 
-        externalFinalsCounter.getFinalsCounterRenderer().update();
+        weavefks.getFinalsCounterRenderer().update();
     }
 
     private List<String> getScoreboardLines() {
@@ -253,7 +253,7 @@ public class ChatMessageParser {
             if (!serverIP.toLowerCase().endsWith("hypixel.net")) {
                 return;
             }
-            externalFinalsCounter.getFinalsCounterRenderer().update();
+            weavefks.getFinalsCounterRenderer().update();
             String unformattedText = iChatComponent.getUnformattedText();
 
             if (unformattedText.equals("                                 Mega Walls")) {
@@ -339,7 +339,7 @@ public class ChatMessageParser {
                             allPlayers.put(killer, allPlayers.getOrDefault(killer, 0) + 1);
                         }
 
-                        externalFinalsCounter.getFinalsCounterRenderer().update();
+                        weavefks.getFinalsCounterRenderer().update();
                         return;
                     }
                     if (matcher.groupCount() == 1) {
@@ -364,7 +364,7 @@ public class ChatMessageParser {
                         allPlayers.remove(killed);
                         deadPlayers.add(killed);
 
-                        externalFinalsCounter.getFinalsCounterRenderer().update();
+                        weavefks.getFinalsCounterRenderer().update();
                         return;
                     }
                 }

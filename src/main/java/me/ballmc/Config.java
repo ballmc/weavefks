@@ -1,4 +1,4 @@
-package com.shtruz.mod;
+package me.ballmc.weavefks;
 
 public class Config {
     public boolean displayFinalsCounter = true;

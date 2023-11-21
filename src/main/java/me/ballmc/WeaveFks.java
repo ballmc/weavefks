@@ -1,9 +1,9 @@
-package com.shtruz.mod;
+package me.ballmc.weavefks;
 
 import com.google.gson.Gson;
-import com.shtruz.mod.Config;
-import com.shtruz.mod.finalscounter.ChatMessageParser;
-import com.shtruz.mod.finalscounter.FinalsCounterRenderer;
+import me.ballmc.weavefks.Config;
+import me.ballmc.weavefks.finalscounter.ChatMessageParser;
+import me.ballmc.weavefks.finalscounter.FinalsCounterRenderer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
@@ -24,28 +24,28 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
-public class ExternalFinalsCounter {
-    public static ExternalFinalsCounter instance;
+public class WeaveFks {
+    public static WeaveFks instance;
     private final ChatMessageParser chatMessageParser = new ChatMessageParser(this);
     private final FinalsCounterRenderer finalsCounterRenderer = new FinalsCounterRenderer(this);
     private File configFile;
     private Config config = new Config();
     private final Gson gson = new Gson();
     
-    public ExternalFinalsCounter() {
+    public WeaveFks() {
         instance = this;
     }
 
-    public static ExternalFinalsCounter getInstance() {
+    public static WeaveFks getInstance() {
         if (instance == null) {
-            instance = new ExternalFinalsCounter();
+            instance = new WeaveFks();
         }
         return instance;
     }
 
     public boolean initialize(String workingDirectory) {
-        System.out.println("ExternalFinalsCounter.initialize");
-        configFile = new File(workingDirectory, "ExternalFinalsCounter.json");
+        System.out.println("WeaveFks.initialize");
+        configFile = new File(workingDirectory, "WeaveFks.json");
 
         if (configFile.exists()) {
             try {
@@ -64,8 +64,8 @@ public class ExternalFinalsCounter {
     // public void onPrintChatMessage(ChatReceivedEvent e) {
     //     if (Minecraft.getMinecraft().thePlayer == null) return;
     //     if (Minecraft.getMinecraft().theWorld == null) return;
-    //     System.out.println("ExternalFinalsCounter.onPrintChatMessage");
-    //     System.out.println("ExternalFinalsCounter.onPrintChatMessage: " + e.getMessage());
+    //     System.out.println("WeaveFks.onPrintChatMessage");
+    //     System.out.println("WeaveFks.onPrintChatMessage: " + e.getMessage());
     //     chatMessageParser.onChat(e.getMessage());
     //     instance.addChatComponentText("onPrintChatMessage");
     // }

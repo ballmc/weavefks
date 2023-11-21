@@ -1,6 +1,6 @@
-package com.shtruz.mod.command;
+package me.ballmc.weavefks.command;
 
-import com.shtruz.mod.ExternalFinalsCounter;
+import me.ballmc.weavefks.WeaveFks;
 import net.weavemc.loader.api.command.Command;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +11,7 @@ public class SetPosCommand extends Command {
 
     @Override
     public void handle(@NotNull String[] args) {
-        ExternalFinalsCounter externalFinalsCounter = ExternalFinalsCounter.getInstance();
+        WeaveFks weavefks = WeaveFks.getInstance();
 
         if (args.length != 2) {
             return;
@@ -32,15 +32,15 @@ public class SetPosCommand extends Command {
             return;
         }
 
-        externalFinalsCounter.getConfig().finalsCounterX = x;
-        externalFinalsCounter.getConfig().finalsCounterY = y;
+        weavefks.getConfig().finalsCounterX = x;
+        weavefks.getConfig().finalsCounterY = y;
 
-        externalFinalsCounter.saveConfig();
+        weavefks.saveConfig();
 
         try {
             String output = "Set pos to X: " + x + ", Y: " + y;
 
-            externalFinalsCounter.addChatComponentText(output);
+            weavefks.addChatComponentText(output);
         } catch (Exception exception) {
             exception.printStackTrace();
         }

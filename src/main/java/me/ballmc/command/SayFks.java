@@ -1,6 +1,6 @@
-package com.shtruz.mod.command;
+package me.ballmc.weavefks.command;
 
-import com.shtruz.mod.ExternalFinalsCounter;
+import me.ballmc.weavefks.WeaveFks;
 import net.weavemc.loader.api.command.Command;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,25 +15,25 @@ public class SayFks extends Command {
 
     @Override
     public void handle(@NotNull String[] args) {
-        ExternalFinalsCounter externalFinalsCounter = ExternalFinalsCounter.getInstance();
+        WeaveFks weavefks = WeaveFks.getInstance();
 
         try {
-            int blueFinals = externalFinalsCounter.getChatMessageParser().getBlue()
+            int blueFinals = weavefks.getChatMessageParser().getBlue()
                     .values()
                     .stream()
                     .reduce(0, Integer::sum);
 
-            int greenFinals = externalFinalsCounter.getChatMessageParser().getGreen()
+            int greenFinals = weavefks.getChatMessageParser().getGreen()
                     .values()
                     .stream()
                     .reduce(0, Integer::sum);
 
-            int redFinals = externalFinalsCounter.getChatMessageParser().getRed()
+            int redFinals = weavefks.getChatMessageParser().getRed()
                     .values()
                     .stream()
                     .reduce(0, Integer::sum);
 
-            int yellowFinals = externalFinalsCounter.getChatMessageParser().getYellow()
+            int yellowFinals = weavefks.getChatMessageParser().getYellow()
                     .values()
                     .stream()
                     .reduce(0, Integer::sum);
@@ -53,7 +53,7 @@ public class SayFks extends Command {
             //                 "RED: " + redFinals + " " +
             //                 "YELLOW: " + yellowFinals;
 
-            externalFinalsCounter.sendMessage(sortedFinals);
+            weavefks.sendMessage(sortedFinals);
         } catch (Exception exception) {
             exception.printStackTrace();
         }

@@ -1,6 +1,6 @@
-package com.shtruz.mod.command;
+package me.ballmc.weavefks.command;
 
-import com.shtruz.mod.ExternalFinalsCounter;
+import me.ballmc.weavefks.WeaveFks;
 import net.weavemc.loader.api.command.Command;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,12 +11,12 @@ public class ResetFinalsCommand extends Command {
 
     @Override
     public void handle(@NotNull String[] args) {
-        ExternalFinalsCounter externalFinalsCounter = ExternalFinalsCounter.getInstance();
+        WeaveFks weavefks = WeaveFks.getInstance();
 
-        externalFinalsCounter.getChatMessageParser().reset();
+        weavefks.getChatMessageParser().reset();
 
         try {
-            externalFinalsCounter.addChatComponentText("Reset finals");
+            weavefks.addChatComponentText("Reset finals");
         } catch (Exception exception) {
             exception.printStackTrace();
         }

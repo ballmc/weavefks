@@ -1,6 +1,6 @@
 {
   "compatibilityLevel": "JAVA_8",
-  "package": "com.shtruz.mod.mixins",
+  "package": "me.ballmc.weavefks.mixins",
   "mixins": [
     "MinecraftMixin"
   ]

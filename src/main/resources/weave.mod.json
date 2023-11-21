@@ -1,11 +1,8 @@
 {
   "mixinConfigs": [
-    "examplemod.mixins.json"
+    "weavefks.mixins.json"
   ],
   "entrypoints": [
-    "com.shtruz.mod.ExampleMod"
-  ],
-  "hooks": [
-    "com.shtruz.mod.hook.MinecraftHook"
+    "me.ballmc.weavefks.Main"
   ]
 }

@@ -1,4 +1,4 @@
-rootProject.name = "ExternalFinalsCounter"
+rootProject.name = "WeaveFks"
 
 pluginManagement {
     repositories {

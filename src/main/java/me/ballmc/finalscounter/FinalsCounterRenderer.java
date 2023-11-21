@@ -1,6 +1,6 @@
-package com.shtruz.mod.finalscounter;
+package me.ballmc.weavefks.finalscounter;
 
-import com.shtruz.mod.ExternalFinalsCounter;
+import me.ballmc.weavefks.WeaveFks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,20 +11,20 @@ import java.util.stream.Collectors;
 
 
 public class FinalsCounterRenderer {
-    private final ExternalFinalsCounter externalFinalsCounter;
+    private final WeaveFks weavefks;
     private final Map<String, String> teamStrings = new LinkedHashMap<>();
 
-    public FinalsCounterRenderer(ExternalFinalsCounter externalFinalsCounter) {
-        this.externalFinalsCounter = externalFinalsCounter;
+    public FinalsCounterRenderer(WeaveFks weavefks) {
+        this.weavefks = weavefks;
     }
 
     public void update() {
         // Put the strings into a LinkedHashMap to maintain the order of insertion
         LinkedHashMap<String, Map<String, Integer>> teamData = new LinkedHashMap<>();
-        teamData.put("Blue", externalFinalsCounter.getChatMessageParser().getBlue());
-        teamData.put("Green", externalFinalsCounter.getChatMessageParser().getGreen());
-        teamData.put("Red", externalFinalsCounter.getChatMessageParser().getRed());
-        teamData.put("Yellow", externalFinalsCounter.getChatMessageParser().getYellow());
+        teamData.put("Blue", weavefks.getChatMessageParser().getBlue());
+        teamData.put("Green", weavefks.getChatMessageParser().getGreen());
+        teamData.put("Red", weavefks.getChatMessageParser().getRed());
+        teamData.put("Yellow", weavefks.getChatMessageParser().getYellow());
 
         LinkedHashMap<String, Map<String, Integer>> sortedTeams = sortByValues(teamData);
     
@@ -93,19 +93,19 @@ public class FinalsCounterRenderer {
     public void render() {
         try {
             Minecraft mc = Minecraft.getMinecraft();
-            // externalFinalsCounter.addChatComponentText("in render function");
+            // weavefks.addChatComponentText("in render function");
             boolean inGameHasFocus = mc.inGameHasFocus;
 
             GameSettings gameSettings = mc.gameSettings;
             boolean showDebugInfo = gameSettings.showDebugInfo;
 
-            if (externalFinalsCounter.getConfig().displayFinalsCounter
+            if (weavefks.getConfig().displayFinalsCounter
                     && inGameHasFocus
                     && !showDebugInfo) {
-                float x = externalFinalsCounter.getConfig().finalsCounterX;
-                float y = externalFinalsCounter.getConfig().finalsCounterY;
+                float x = weavefks.getConfig().finalsCounterX;
+                float y = weavefks.getConfig().finalsCounterY;
 
-                double scale = externalFinalsCounter.getConfig().finalsCounterScale / 100.0;
+                double scale = weavefks.getConfig().finalsCounterScale / 100.0;
 
                 x /= scale;
                 y /= scale;
@@ -154,13 +154,13 @@ public class FinalsCounterRenderer {
     private String getPrefix(String teamName) {
         switch (teamName) {
             case "Blue":
-                return externalFinalsCounter.getChatMessageParser().getBluePrefix();
+                return weavefks.getChatMessageParser().getBluePrefix();
             case "Green":
-                return externalFinalsCounter.getChatMessageParser().getGreenPrefix();
+                return weavefks.getChatMessageParser().getGreenPrefix();
             case "Red":
-                return externalFinalsCounter.getChatMessageParser().getRedPrefix();
+                return weavefks.getChatMessageParser().getRedPrefix();
             case "Yellow":
-                return externalFinalsCounter.getChatMessageParser().getYellowPrefix();
+                return weavefks.getChatMessageParser().getYellowPrefix();
             default:
                 return "";
         }
