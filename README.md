@@ -1,5 +1,5 @@
-# WeaveFks
-<img alt="downloadcount" src="https://img.shields.io/github/downloads/ballmc/weavefks/total" />
+# WeaveFks <img alt="downloadcount" src="https://img.shields.io/github/downloads/ballmc/weavefks/total" />
+
 Mega Walls Final Kills Counter Mod for Weave (Supports Lunar Client & more launchers to come!) 
 
 Click the image to see the tutorial/showcase video
