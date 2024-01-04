@@ -2,6 +2,7 @@
   "compatibilityLevel": "JAVA_8",
   "package": "me.ballmc.weavefks.mixins",
   "mixins": [
-    "MinecraftMixin"
+    "MinecraftMixin",
+    "GuiPlayerTabOverlayMixin"
   ]
 }
