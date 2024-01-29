@@ -6,6 +6,8 @@ import me.ballmc.weavefks.finalscounter.ChatMessageParser;
 import me.ballmc.weavefks.finalscounter.FinalsCounterRenderer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 
@@ -23,6 +25,8 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WeaveFks {
     public static WeaveFks instance;
@@ -31,6 +35,8 @@ public class WeaveFks {
     private File configFile;
     private Config config = new Config();
     private final Gson gson = new Gson();
+
+    private static List<String> partyMembers = new ArrayList<>();
     
     public WeaveFks() {
         instance = this;
@@ -60,38 +66,35 @@ public class WeaveFks {
         return true;
     }
 
-    // @SubscribeEvent
-    // public void onPrintChatMessage(ChatReceivedEvent e) {
-    //     if (Minecraft.getMinecraft().thePlayer == null) return;
-    //     if (Minecraft.getMinecraft().theWorld == null) return;
-    //     System.out.println("WeaveFks.onPrintChatMessage");
-    //     System.out.println("WeaveFks.onPrintChatMessage: " + e.getMessage());
-    //     chatMessageParser.onChat(e.getMessage());
-    //     instance.addChatComponentText("onPrintChatMessage");
-    // }
+    public List<String> getPartyMembers() {
+        return new ArrayList<>(partyMembers);
+    }
 
-    // public void onPrintChatMessage(IChatComponent iChatComponent, int chatLineId, CallbackInfo ci) {
-    //     chatMessageParser.onChat(iChatComponent);
-    //     instance.addChatComponentText("onPrintChatMessage");
-    // }
+    public void addPartyMember(String playerName) {
+        partyMembers.add(playerName);
+    }
 
-    // public boolean onSendChatMessage(String message) {
-    //     message = message.trim();
+    public void removePartyMember(String playerName) {
+        partyMembers.remove(playerName);
+    }
 
-    //     if (message.startsWith(".")) {
-    //         message = message.substring(1);
+    public void clearPartyMembers() {
+        partyMembers.clear();
+    }
 
-    //         if (!message.isEmpty()) {
-    //             return commandManager.executeCommand(message);
-    //         }
-    //     }
-
-    //     return false;
-    // }
-    
-    // public void onRender() {
-    //     finalsCounterRenderer.render();
-    // }
+    public EntityPlayer getPlayerByName(String playerName) {
+        for (Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
+            if (entity instanceof EntityPlayer) {
+                EntityPlayer player = (EntityPlayer) entity;
+                String playerNameInGame = player.getGameProfile().getName();
+                // Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("playerbyname: " + playerNameInGame));
+                if (playerNameInGame != null && playerNameInGame.equals(playerName)) {
+                    return player;
+                }
+            }
+        }
+        return null; // Player not found
+    }
 
     public ChatMessageParser getChatMessageParser() {
         return chatMessageParser;
