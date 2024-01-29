@@ -82,6 +82,16 @@ public class WeaveFks {
         partyMembers.clear();
     }
 
+    public void addSelfToPartyMembers() {
+        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        if (player != null) {
+            String playerName = player.getGameProfile().getName();
+            if (!partyMembers.contains(playerName)) {
+                partyMembers.add(playerName);
+            }
+        }
+    }
+
     public EntityPlayer getPlayerByName(String playerName) {
         for (Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
             if (entity instanceof EntityPlayer) {

@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public class phudclear extends Command {
     public phudclear() {
         super("phudclear");
+        System.out.println("phudclear");
     }
 
     @Override
@@ -15,6 +16,7 @@ public class phudclear extends Command {
 
         // Clear all players from the party HUD (modify the method as needed)
         weavefks.clearPartyMembers();
+        weavefks.addSelfToPartyMembers();
 
         try {
             String output = "Cleared all players from the party HUD";

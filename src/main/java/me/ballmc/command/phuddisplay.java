@@ -2,6 +2,7 @@ package me.ballmc.weavefks.command;
 
 import me.ballmc.weavefks.WeaveFks;
 import net.weavemc.loader.api.command.Command;
+import org.jetbrains.annotations.NotNull;
 
 public class phuddisplay extends Command {
     public phuddisplay() {
@@ -9,7 +10,7 @@ public class phuddisplay extends Command {
     }
 
     @Override
-    public void handle(String[] args) {
+    public void handle(@NotNull String[] args) {
         WeaveFks weavefks = WeaveFks.getInstance();
 
         // Toggle the displayPartyHud variable

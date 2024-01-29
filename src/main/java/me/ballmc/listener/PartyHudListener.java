@@ -33,6 +33,7 @@ public class PartyHudListener {
         if (mc.thePlayer == null) {
             return;
         }
+        weavefks.addSelfToPartyMembers();
         if (weavefks.getPartyMembers() == null || weavefks.getPartyMembers().isEmpty()) {
             return;
         }
@@ -40,7 +41,6 @@ public class PartyHudListener {
         boolean inGameHasFocus = mc.inGameHasFocus;
         GameSettings gameSettings = mc.gameSettings;
         boolean showDebugInfo = gameSettings.showDebugInfo;
-
         if (weavefks.getConfig().displayPartyHUD && inGameHasFocus && !showDebugInfo) {
             float x = weavefks.getConfig().partyHUDX;
             float y = weavefks.getConfig().partyHUDY;
@@ -66,7 +66,7 @@ public class PartyHudListener {
             
                 if (player != null) {
                     float playerHealth = player.getHealth();
-                    String displayString = playerName + " - " + Math.round(playerHealth) + " HP";
+                    String displayString = player.getDisplayName().getFormattedText() + " - " + Math.round(playerHealth) + " HP";
                     fontRenderer.drawString(displayString, x, y, -1, false);
                     y += 10; 
                 }
