@@ -16,29 +16,30 @@ public class Main implements ModInitializer {
     @Override
     public void preInit() {
         System.out.println("Initializing weavefks!");
+        EventBus.subscribe(this);
+        
+    }
+    @SubscribeEvent
+    public void onGameStart(StartGameEvent.Post e) {
         WeaveFks weavefks = WeaveFks.getInstance();
         ChatMessageParser chatMessageParser = weavefks.getChatMessageParser();
+        EventBus.subscribe(ChatReceivedEvent.class, ce -> {
+            chatMessageParser.onChat(ce.getMessage());
+        });
         CommandBus.register(new DisplayFinalsCounterCommand());
         CommandBus.register(new FinalsCommand());
         CommandBus.register(new FinalsInTabCommand());
-        CommandBus.register(new phudpos());
-        CommandBus.register(new phudadd());
-        CommandBus.register(new phudclear());
-        CommandBus.register(new phudlist());
-        CommandBus.register(new phuddisplay());
+        CommandBus.register(new PartyHudAddCommand());
+        CommandBus.register(new PartyHudClearCommand());
+        CommandBus.register(new PartyHudDisplayCommand());
+        CommandBus.register(new PartyHudListCommand());
+        CommandBus.register(new PartyHudPositionCommand());
+        CommandBus.register(new PartyHudScaleCommand());
         CommandBus.register(new PlayerFinalsCommand());
         CommandBus.register(new ResetFinalsCommand());
         CommandBus.register(new SayFks());
         CommandBus.register(new SetPosCommand());
         CommandBus.register(new SetScaleCommand());
-        EventBus.subscribe(this);
-        EventBus.subscribe(ChatReceivedEvent.class, e -> {
-            chatMessageParser.onChat(e.getMessage());
-        });
-    }
-    @SubscribeEvent
-    public void onGameStart(StartGameEvent e) {
-        WeaveFks weavefks = WeaveFks.getInstance();
         weavefks.initialize(System.getProperty("user.home") + "/.weave/mods");
         EventBus.subscribe(new RenderGameOverlayListener());
         EventBus.subscribe(new PartyHudListener());

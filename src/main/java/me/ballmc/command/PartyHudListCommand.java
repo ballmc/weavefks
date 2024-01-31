@@ -6,8 +6,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class phudlist extends Command {
-    public phudlist() {
+public class PartyHudListCommand extends Command {
+    public PartyHudListCommand() {
         super("phudlist");
     }
 

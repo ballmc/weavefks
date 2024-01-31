@@ -4,8 +4,8 @@ import me.ballmc.weavefks.WeaveFks;
 import net.weavemc.loader.api.command.Command;
 import org.jetbrains.annotations.NotNull;
 
-public class phudpos extends Command{
-        public phudpos() {
+public class PartyHudPositionCommand extends Command{
+        public PartyHudPositionCommand() {
             super("phudpos");
         }
 
