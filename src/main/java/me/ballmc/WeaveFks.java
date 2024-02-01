@@ -29,7 +29,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 public class WeaveFks {
     public static WeaveFks instance;
@@ -108,31 +110,27 @@ public class WeaveFks {
     //     }
     //     return null; // Player not found
     // }
-
-    public List<NetworkPlayerInfo> getPartyMembersNetworkPlayerInfo(String playerName) {
-        List<NetworkPlayerInfo> partyMembersInfo = new ArrayList<>();
-    
-        EntityPlayerSP playerSP = Minecraft.getMinecraft().thePlayer;
-    
-        if (playerSP != null) {
-            NetHandlerPlayClient netHandler = playerSP.sendQueue;
-    
-            if (netHandler != null) {
-                for (NetworkPlayerInfo playerInfo : netHandler.getPlayerInfoMap()) {
-                    String playerNameInGame = playerInfo.getGameProfile().getName();
-    
-                    if (playerNameInGame != null && playerNameInGame.equals(playerName)) {
-                        // Add the matching playerInfo to the list
-                        partyMembersInfo.add(playerInfo);
-                    }
+    public Collection<NetworkPlayerInfo> getPartyMembersNetworkPlayerInfo(String playerName) {
+        Collection<NetworkPlayerInfo> partyMembersInfo = new ArrayList<>();
+        
+        Collection<NetworkPlayerInfo> playerInfoMap = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
+        
+        if (playerInfoMap != null) {
+            for (NetworkPlayerInfo playerInfo : playerInfoMap) {
+                String playerNameInGame = playerInfo.getGameProfile().getName();
+                // System.out.println("playerNameInGame: " + playerNameInGame);
+        
+                if (playerNameInGame != null && playerNameInGame.equals(playerName)) {
+                    // Add the matching playerInfo to the list
+                    System.out.println("ADDED TO PARTY MEMBERS INFO");
+                    partyMembersInfo.add(playerInfo);
                 }
             }
         }
         return partyMembersInfo;
     }
     
-
-
+    
     public ChatMessageParser getChatMessageParser() {
         return chatMessageParser;
     }
