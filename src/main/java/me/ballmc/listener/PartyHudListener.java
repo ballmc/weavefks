@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
@@ -29,21 +30,25 @@ public class PartyHudListener {
 
     public void render() {
     try {
-        // mc.thePlayer.addChatMessage(new ChatComponentText("in phud listener"));
-        if (mc.thePlayer == null) {
+        Minecraft mc = Minecraft.getMinecraft();
+
+        if (mc.thePlayer == null || mc.theWorld == null) {
             return;
         }
+
         weavefks.addSelfToPartyMembers();
+
         if (weavefks.getPartyMembers() == null || weavefks.getPartyMembers().isEmpty()) {
             return;
         }
-        Minecraft mc = Minecraft.getMinecraft();
+
         boolean inGameHasFocus = mc.inGameHasFocus;
         GameSettings gameSettings = mc.gameSettings;
         boolean showDebugInfo = gameSettings.showDebugInfo;
+
         if (weavefks.getConfig().displayPartyHUD && inGameHasFocus && !showDebugInfo) {
-            float x = weavefks.getConfig().partyHUDX;
-            float y = weavefks.getConfig().partyHUDY;
+            float x = (float) (weavefks.getConfig().partyHUDX / 2.0);
+            float y = (float) (weavefks.getConfig().partyHUDY / 2.0);
 
             double scale = weavefks.getConfig().partyHUDScale / 100.0;
 
@@ -56,26 +61,20 @@ public class PartyHudListener {
 
             FontRenderer fontRenderer = mc.fontRendererObj;
 
-            for (EntityPlayer loadedPlayer : mc.theWorld.playerEntities) {
-                String loadedPlayerName = loadedPlayer.getGameProfile().getName();
-                // mc.thePlayer.addChatMessage(new ChatComponentText("Loaded Player: " + loadedPlayerName));
-            }
-        
             for (String playerName : weavefks.getPartyMembers()) {
-                EntityPlayer player = weavefks.getPlayerByName(playerName);
-            
-                if (player != null) {
-                    float playerHealth = player.getHealth();
-                    String displayString = player.getDisplayName().getFormattedText() + " - " + Math.round(playerHealth) + " HP";
-                    fontRenderer.drawString(displayString, x, y, -1, false);
-                    y += 10; 
+                List<NetworkPlayerInfo> partyMembersInfo = weavefks.getPartyMembersNetworkPlayerInfo(playerName);
+                for (NetworkPlayerInfo playerInfo : partyMembersInfo) {
+                    String playerDisplayName = playerInfo.getGameProfile().getName();
+                    fontRenderer.drawString(playerDisplayName, x, y, -1, false);
+                    y += 10;
                 }
             }
+            
 
             GlStateManager.popMatrix();
         }
     } catch (Exception exception) {
         exception.printStackTrace();
     }
-}
+    }
 }

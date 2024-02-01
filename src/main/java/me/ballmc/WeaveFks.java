@@ -6,6 +6,9 @@ import me.ballmc.weavefks.finalscounter.ChatMessageParser;
 import me.ballmc.weavefks.finalscounter.FinalsCounterRenderer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ChatComponentText;
@@ -92,19 +95,43 @@ public class WeaveFks {
         }
     }
 
-    public EntityPlayer getPlayerByName(String playerName) {
-        for (Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
-            if (entity instanceof EntityPlayer) {
-                EntityPlayer player = (EntityPlayer) entity;
-                String playerNameInGame = player.getGameProfile().getName();
-                // Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("playerbyname: " + playerNameInGame));
-                if (playerNameInGame != null && playerNameInGame.equals(playerName)) {
-                    return player;
+    // public EntityPlayer getPlayerByName(String playerName) {
+    //     for (Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
+    //         if (entity instanceof EntityPlayer) {
+    //             EntityPlayer player = (EntityPlayer) entity;
+    //             String playerNameInGame = player.getGameProfile().getName();
+    //             // Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("playerbyname: " + playerNameInGame));
+    //             if (playerNameInGame != null && playerNameInGame.equals(playerName)) {
+    //                 return player;
+    //             }
+    //         }
+    //     }
+    //     return null; // Player not found
+    // }
+
+    public List<NetworkPlayerInfo> getPartyMembersNetworkPlayerInfo(String playerName) {
+        List<NetworkPlayerInfo> partyMembersInfo = new ArrayList<>();
+    
+        EntityPlayerSP playerSP = Minecraft.getMinecraft().thePlayer;
+    
+        if (playerSP != null) {
+            NetHandlerPlayClient netHandler = playerSP.sendQueue;
+    
+            if (netHandler != null) {
+                for (NetworkPlayerInfo playerInfo : netHandler.getPlayerInfoMap()) {
+                    String playerNameInGame = playerInfo.getGameProfile().getName();
+    
+                    if (playerNameInGame != null && playerNameInGame.equals(playerName)) {
+                        // Add the matching playerInfo to the list
+                        partyMembersInfo.add(playerInfo);
+                    }
                 }
             }
         }
-        return null; // Player not found
+        return partyMembersInfo;
     }
+    
+
 
     public ChatMessageParser getChatMessageParser() {
         return chatMessageParser;
