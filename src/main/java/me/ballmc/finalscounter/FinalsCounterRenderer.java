@@ -55,41 +55,7 @@ public class FinalsCounterRenderer {
     
         return sortedMap;
     }
-
-    // public void update() {
-    //     // Creating a LinkedHashMap to maintain the order of insertion
-    //     LinkedHashMap<String, Integer> teamData = new LinkedHashMap<>();
-    //     teamData.put("Blue", 1);
-    //     teamData.put("Green", 2);
-    //     teamData.put("Red", 2);
-    //     teamData.put("Yellow", 4);
-
-    //     // Sorting the map by values in descending order
-    //     LinkedHashMap<String, Integer> sortedTeamData = sortByValues(teamData);
-
-    //     // Update teamStrings based on the sorted order
-    //     for (Map.Entry<String, Integer> entry : sortedTeamData.entrySet()) {
-    //         String teamName = entry.getKey();
-    //         String teamString = printTeam(teamName, getPrefix(teamName), Collections.singletonMap("finals", entry.getValue()));
-    //         teamStrings.put(teamName, teamString);
-    //     }
-    // }
-
-    // private LinkedHashMap<String, Integer> sortByValues(Map<String, Integer> map) {
-    //     List<Map.Entry<String, Integer>> entries = new LinkedList<>(map.entrySet());
-
-    //     // Custom comparator to sort by values in descending order
-    //     Collections.sort(entries, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
-
-    //     // Creating a new LinkedHashMap to maintain the order of insertion
-    //     LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
-    //     for (Map.Entry<String, Integer> entry : entries) {
-    //         sortedMap.put(entry.getKey(), entry.getValue());
-    //     }
-
-    //     return sortedMap;
-    // }
-
+    
     public void render() {
         try {
             Minecraft mc = Minecraft.getMinecraft();

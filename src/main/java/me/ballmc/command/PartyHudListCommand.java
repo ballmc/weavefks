@@ -14,8 +14,6 @@ public class PartyHudListCommand extends Command {
     @Override
     public void handle(@NotNull String[] args) {
         WeaveFks weavefks = WeaveFks.getInstance();
-
-        // Get the current list of players in the party HUD (modify the method as needed)
         List<String> partyMembers = weavefks.getPartyMembers();
 
         try {

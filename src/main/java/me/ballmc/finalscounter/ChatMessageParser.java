@@ -10,9 +10,6 @@ import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.IChatComponent;
-
-
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -172,10 +169,16 @@ public class ChatMessageParser {
     public String getFinalsInTabString(String playerName) {
         if (weavefks.getConfig().finalsInTab) {
             if (allPlayers.containsKey(playerName)) {
-                return " " + "\u00A7e" + allPlayers.get(playerName);
+                return " " + "\u00A76" + allPlayers.get(playerName);
             }
         }
+        return "";
+    }
 
+    public String getFinalsPlayer(String playerName) {
+        if (allPlayers.containsKey(playerName)) {
+            return " " + "\u00A76" + allPlayers.get(playerName);
+        }
         return "";
     }
 
@@ -276,7 +279,7 @@ public class ChatMessageParser {
             }
 
             String scoreboardTitle = objective.getDisplayName();
-            scoreboardTitle = StringUtils.stripControlCodes(scoreboardTitle); // Strip control codes
+            scoreboardTitle = StringUtils.stripControlCodes(scoreboardTitle); 
             if (!scoreboardTitle.contains("MEGA WALLS")) {
                 return;
             }

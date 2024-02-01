@@ -35,6 +35,7 @@ public class PartyHudListener {
     private static final Minecraft mc = Minecraft.getMinecraft();
     private static final WeaveFks weavefks = WeaveFks.getInstance();
     String scoreString;
+    String finalsString;
 
     private static EnumChatFormatting getHPColor(float maxHealthPoints, float healthPoints) {
         if (healthPoints > maxHealthPoints) {
@@ -105,12 +106,13 @@ public class PartyHudListener {
                 NetworkPlayerInfo playerInfo = Minecraft.getMinecraft().getNetHandler().getPlayerInfo(playerName);
                 if (playerInfo != null) {
                     scoreString = "";
+                    finalsString = weavefks.getChatMessageParser().getFinalsPlayer(playerName);
                     if (scoreobjective != null && playerInfo.getGameType() != WorldSettings.GameType.SPECTATOR && scoreobjective.getRenderType() != IScoreObjectiveCriteria.EnumRenderType.HEARTS) {
                         final int scorePoints = scoreobjective.getScoreboard().getValueFromObjective(playerInfo.getGameProfile().getName(), scoreobjective).getScorePoints();
                         scoreString = getColoredHP(scorePoints) + " " + scorePoints;
                     }
                     String displayString = ScorePlayerTeam.formatPlayerName(playerInfo.getPlayerTeam(), playerInfo.getGameProfile().getName());
-                    fontRenderer.drawStringWithShadow(displayString + scoreString, x, y, 0xFFFFFF);
+                    fontRenderer.drawStringWithShadow(displayString + finalsString + scoreString, x, y, 0xFFFFFF);
                     y += 10;
                 }
             }

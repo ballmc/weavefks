@@ -18,8 +18,6 @@ public class PartyHudAddCommand extends Command {
         }
 
         String playerName = args[0];
-
-        // Add the player to the party HUD (modify the method as needed)
         weavefks.addPartyMember(playerName);
 
         try {

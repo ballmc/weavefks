@@ -12,8 +12,6 @@ public class PartyHudDisplayCommand extends Command {
     @Override
     public void handle(@NotNull String[] args) {
         WeaveFks weavefks = WeaveFks.getInstance();
-
-        // Toggle the displayPartyHud variable
         weavefks.getConfig().displayPartyHUD = !weavefks.getConfig().displayPartyHUD;
         weavefks.saveConfig();
 

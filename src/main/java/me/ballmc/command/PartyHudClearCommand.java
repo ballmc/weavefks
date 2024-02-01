@@ -13,8 +13,6 @@ public class PartyHudClearCommand extends Command {
     @Override
     public void handle(@NotNull String[] args) {
         WeaveFks weavefks = WeaveFks.getInstance();
-
-        // Clear all players from the party HUD (modify the method as needed)
         weavefks.clearPartyMembers();
         weavefks.addSelfToPartyMembers();
 
