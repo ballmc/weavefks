@@ -110,7 +110,7 @@ public class PartyHudListener {
                         scoreString = getColoredHP(scorePoints) + " " + scorePoints;
                     }
                     String displayString = ScorePlayerTeam.formatPlayerName(playerInfo.getPlayerTeam(), playerInfo.getGameProfile().getName());
-                    fontRenderer.drawString(displayString + scoreString, x, y, -1, false);
+                    fontRenderer.drawStringWithShadow(displayString + scoreString, x, y, 0xFFFFFF);
                     y += 10;
                 }
             }
