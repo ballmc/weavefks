@@ -8,6 +8,7 @@ import me.ballmc.weavefks.finalscounter.ChatMessageParser;
 import me.ballmc.weavefks.command.*;
 import me.ballmc.weavefks.listener.RenderGameOverlayListener;
 import me.ballmc.weavefks.listener.PartyHudListener;
+import me.ballmc.weavefks.listener.WitherTimeToDieListener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import org.lwjgl.input.Keyboard;
@@ -43,5 +44,6 @@ public class Main implements ModInitializer {
         weavefks.initialize(System.getProperty("user.home") + "/.weave/mods");
         EventBus.subscribe(new RenderGameOverlayListener());
         EventBus.subscribe(new PartyHudListener());
+        EventBus.subscribe(new WitherTimeToDieListener());
     }
 }

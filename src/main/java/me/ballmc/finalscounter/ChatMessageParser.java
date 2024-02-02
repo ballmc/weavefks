@@ -2,6 +2,9 @@ package me.ballmc.weavefks.finalscounter;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import net.weavemc.loader.api.event.*;
+import me.ballmc.weavefks.events.MegaWallsGameEvent;
+
 import me.ballmc.weavefks.WeaveFks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.scoreboard.Score;
@@ -15,6 +18,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import org.apache.logging.log4j.core.appender.db.jpa.converter.MessageAttributeConverter;
 
 
 public class ChatMessageParser {
@@ -106,6 +111,7 @@ public class ChatMessageParser {
         "(\\w{1,16}) had a block fall on them\\.",
         "(\\w{1,16}) drowned\\.",
         "(\\w{1,16}) died from a cactus\\." };
+    public int withersDeadCount = 0;
     private final Map<String, Integer> allPlayers = new HashMap<>();
     private final Map<String, Integer> blue = new HashMap<>();
     private final Map<String, Integer> green = new HashMap<>();
@@ -120,6 +126,10 @@ public class ChatMessageParser {
     private boolean greenWitherDead = false;
     private boolean redWitherDead = false;
     private boolean yellowWitherDead = false;
+    private boolean blueWitherProcessed = false;
+    private boolean greenWitherProcessed = false;
+    private boolean redWitherProcessed = false;
+    private boolean yellowWitherProcessed = false;
     private static Pattern[] KILL_PATTERNS;
 
     public ChatMessageParser(WeaveFks weavefks) {
@@ -182,6 +192,10 @@ public class ChatMessageParser {
         return "";
     }
 
+    public int getWithersDeadCount() {
+        return withersDeadCount;
+    }
+
     public void reset() {
         allPlayers.clear();
         blue.clear();
@@ -193,7 +207,11 @@ public class ChatMessageParser {
         greenWitherDead = false;
         redWitherDead = false;
         yellowWitherDead = false;
-
+        blueWitherProcessed = false;
+        greenWitherProcessed = false;
+        redWitherProcessed = false;
+        yellowWitherProcessed = false;
+        withersDeadCount = 0;
         weavefks.getFinalsCounterRenderer().update();
     }
 
@@ -302,6 +320,26 @@ public class ChatMessageParser {
                             yellowPrefix = line.substring(0, 2);
                             yellowWitherDead = !line.contains("Wither");
                         }
+                    }
+                    if (blueWitherDead && !blueWitherProcessed) {
+                        EventBus.callEvent(new MegaWallsGameEvent(MegaWallsGameEvent.EventType.BLUE_WITHER_DEAD));
+                        blueWitherProcessed = true;
+                        withersDeadCount++;
+                    }
+                    if (greenWitherDead && !greenWitherProcessed) {
+                        EventBus.callEvent(new MegaWallsGameEvent(MegaWallsGameEvent.EventType.GREEN_WITHER_DEAD));
+                        greenWitherProcessed = true;
+                        withersDeadCount++;
+                    }
+                    if (redWitherDead && !redWitherProcessed) {
+                        EventBus.callEvent(new MegaWallsGameEvent(MegaWallsGameEvent.EventType.RED_WITHER_DEAD));
+                        redWitherProcessed = true;
+                        withersDeadCount++;
+                    }
+                    if (yellowWitherDead && !yellowWitherProcessed) {
+                        EventBus.callEvent(new MegaWallsGameEvent(MegaWallsGameEvent.EventType.YELLOW_WITHER_DEAD));
+                        yellowWitherProcessed = true;
+                        withersDeadCount++;
                     }
 
                     if (matcher.groupCount() == 2) {
