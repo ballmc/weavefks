@@ -44,6 +44,6 @@ public class Main implements ModInitializer {
         weavefks.initialize(System.getProperty("user.home") + "/.weave/mods");
         EventBus.subscribe(new RenderGameOverlayListener());
         EventBus.subscribe(new PartyHudListener());
-        EventBus.subscribe(new WitherTimeToDieListener());
+        // EventBus.subscribe(new WitherTimeToDieListener());
     }
 }

@@ -107,11 +107,8 @@ public class PartyHudListener {
                 NetworkPlayerInfo playerInfo = Minecraft.getMinecraft().getNetHandler().getPlayerInfo(playerName);
                 if (playerInfo != null) {
                     GameProfile gameProfile = playerInfo.getGameProfile();
-
-                    // Draw the player's head
                     mc.getTextureManager().bindTexture(playerInfo.getLocationSkin());
                     Gui.drawScaledCustomSizeModalRect((int) x, (int) y, 8, 8, 8, 8, 8, 8, 64.0F, 64.0F);
-
                     scoreString = "";
                     finalsString = weavefks.getChatMessageParser().getFinalsPlayer(playerName);
                     if (scoreobjective != null && playerInfo.getGameType() != WorldSettings.GameType.SPECTATOR && scoreobjective.getRenderType() != IScoreObjectiveCriteria.EnumRenderType.HEARTS) {
