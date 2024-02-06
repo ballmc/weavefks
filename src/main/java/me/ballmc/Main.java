@@ -35,6 +35,7 @@ public class Main implements ModInitializer {
         CommandBus.register(new PartyHudDisplayCommand());
         CommandBus.register(new PartyHudListCommand());
         CommandBus.register(new PartyHudPositionCommand());
+        CommandBus.register(new PartyHudRemoveCommand());
         CommandBus.register(new PartyHudScaleCommand());
         CommandBus.register(new PlayerFinalsCommand());
         CommandBus.register(new ResetFinalsCommand());
