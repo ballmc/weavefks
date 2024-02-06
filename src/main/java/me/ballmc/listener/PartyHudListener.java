@@ -3,6 +3,7 @@ package me.ballmc.weavefks.listener;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;
@@ -105,17 +106,24 @@ public class PartyHudListener {
             for (String playerName : weavefks.getPartyMembers()) {
                 NetworkPlayerInfo playerInfo = Minecraft.getMinecraft().getNetHandler().getPlayerInfo(playerName);
                 if (playerInfo != null) {
+                    GameProfile gameProfile = playerInfo.getGameProfile();
+
+                    // Draw the player's head
+                    mc.getTextureManager().bindTexture(playerInfo.getLocationSkin());
+                    Gui.drawScaledCustomSizeModalRect((int) x, (int) y, 8, 8, 8, 8, 8, 8, 64.0F, 64.0F);
+
                     scoreString = "";
                     finalsString = weavefks.getChatMessageParser().getFinalsPlayer(playerName);
                     if (scoreobjective != null && playerInfo.getGameType() != WorldSettings.GameType.SPECTATOR && scoreobjective.getRenderType() != IScoreObjectiveCriteria.EnumRenderType.HEARTS) {
-                        final int scorePoints = scoreobjective.getScoreboard().getValueFromObjective(playerInfo.getGameProfile().getName(), scoreobjective).getScorePoints();
+                        final int scorePoints = scoreobjective.getScoreboard().getValueFromObjective(gameProfile.getName(), scoreobjective).getScorePoints();
                         scoreString = getColoredHP(scorePoints) + " " + scorePoints;
                     }
-                    String displayString = ScorePlayerTeam.formatPlayerName(playerInfo.getPlayerTeam(), playerInfo.getGameProfile().getName());
-                    fontRenderer.drawStringWithShadow(displayString + finalsString + scoreString, x, y, 0xFFFFFF);
-                    y += 10;
+                    String displayString = ScorePlayerTeam.formatPlayerName(playerInfo.getPlayerTeam(), gameProfile.getName());
+                    fontRenderer.drawStringWithShadow(displayString + finalsString + scoreString, x + 10, y, 0xFFFFFF);
+                    y += 10; 
                 }
             }
+
             GlStateManager.popMatrix();
         }
     } catch (Exception exception) {
