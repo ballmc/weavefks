@@ -26,7 +26,7 @@ public abstract class GuiPlayerTabOverlayMixin {
 
   private static EnumChatFormatting getHPColor(float maxHealthPoints, float healthPoints) {
         if (healthPoints > maxHealthPoints) {
-            return EnumChatFormatting.DARK_GREEN;
+            return EnumChatFormatting.GREEN;
         } else if (healthPoints > maxHealthPoints * 3f / 4f) {
             return EnumChatFormatting.GREEN;
         } else if (healthPoints > maxHealthPoints / 2f) {

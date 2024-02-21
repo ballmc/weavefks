@@ -40,7 +40,7 @@ public class PartyHudListener {
 
     private static EnumChatFormatting getHPColor(float maxHealthPoints, float healthPoints) {
         if (healthPoints > maxHealthPoints) {
-            return EnumChatFormatting.DARK_GREEN;
+            return EnumChatFormatting.GREEN;
         } else if (healthPoints > maxHealthPoints * 3f / 4f) {
             return EnumChatFormatting.GREEN;
         } else if (healthPoints > maxHealthPoints / 2f) {
@@ -89,8 +89,8 @@ public class PartyHudListener {
         boolean showDebugInfo = gameSettings.showDebugInfo;
 
         if (weavefks.getConfig().displayPartyHUD && inGameHasFocus && !showDebugInfo) {
-            float x = (float) (weavefks.getConfig().partyHUDX / 2.0);
-            float y = (float) (weavefks.getConfig().partyHUDY / 2.0);
+            float x = (float) (weavefks.getConfig().partyHUDX);
+            float y = (float) (weavefks.getConfig().partyHUDY);
 
             double scale = weavefks.getConfig().partyHUDScale / 100.0;
 
