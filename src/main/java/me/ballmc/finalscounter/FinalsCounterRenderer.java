@@ -86,7 +86,7 @@ public class FinalsCounterRenderer {
                 for (Map.Entry<String, String> entry : teamStrings.entrySet()) {
                     String teamName = entry.getKey();
                     String teamString = entry.getValue();
-                    fontRenderer.drawString(teamString, x, y, -1, false);
+                    fontRenderer.drawStringWithShadow(teamString, x, y, 0xFFFFFF);
                     // System.out.println("teamName: " + teamName + ", teamString: " + teamString + ", x: " + x + ", y: " + y);
                     y += 10; // Adjust the spacing between teams as needed
                 }
