@@ -1,8 +1,0 @@
-{
-  "mixinConfigs": [
-    "weavefks.mixins.json"
-  ],
-  "entrypoints": [
-    "me.ballmc.weavefks.Main"
-  ]
-}
