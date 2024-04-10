@@ -5,7 +5,7 @@ Mega Walls Final Kills Counter Mod for Weave (Supports Lunar Client & more launc
 Click the image to see the tutorial/showcase video
 [![WeaveFks Video](https://img.youtube.com/vi/gOGUhtQOL3E/maxresdefault.jpg)](https://www.youtube.com/watch?v=gOGUhtQOL3E)
 
-Commands
+Final Kill Counter Commands
 
 /displayfinalscounter - Toggles HUD.
 
@@ -22,3 +22,19 @@ Commands
 /playerfinals - Prints player finals to chat.
 
 /resetfinals - Resets finals count.
+
+Party Hud Commands
+
+/phuddisplay - Toggles the display of party hud.
+
+/phudclear - Clears players from your party hud.
+
+/phudadd <player_name_case_sensitive> - Adds a player to your partyhud.
+
+/phudremove <player_name_case_sensitive> - Removes a player from your partyhud.
+
+/phudlist - lists all players in your party hud.
+
+/phudposition <x> <y> - Sets the position of your party hud.
+
+/phudscale <number from 0 to 100> - Sets scale of your party hud.
