@@ -35,6 +35,6 @@ Click the image to see the tutorial/showcase video
 
 /phudlist - lists all players in your party hud.
 
-/phudposition <x> <y> - Sets the position of your party hud.
+/phudpos <x> <y> - Sets the position of your party hud.
 
 /phudscale <number from 0 to 100> - Sets scale of your party hud.
