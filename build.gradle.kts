@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "me.ballmc"
-version = "1.2"
+version = "1.21"
 
 minecraft.version("1.8.9")
 

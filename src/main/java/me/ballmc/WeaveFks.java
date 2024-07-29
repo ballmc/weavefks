@@ -97,19 +97,6 @@ public class WeaveFks {
         }
     }
 
-    // public EntityPlayer getPlayerByName(String playerName) {
-    //     for (Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
-    //         if (entity instanceof EntityPlayer) {
-    //             EntityPlayer player = (EntityPlayer) entity;
-    //             String playerNameInGame = player.getGameProfile().getName();
-    //             // Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("playerbyname: " + playerNameInGame));
-    //             if (playerNameInGame != null && playerNameInGame.equals(playerName)) {
-    //                 return player;
-    //             }
-    //         }
-    //     }
-    //     return null; // Player not found
-    // }
     public Collection<NetworkPlayerInfo> getPartyMembersNetworkPlayerInfo(String playerName) {
         Collection<NetworkPlayerInfo> partyMembersInfo = new ArrayList<>();
         
@@ -118,11 +105,8 @@ public class WeaveFks {
         if (playerInfoMap != null) {
             for (NetworkPlayerInfo playerInfo : playerInfoMap) {
                 String playerNameInGame = playerInfo.getGameProfile().getName();
-                // System.out.println("playerNameInGame: " + playerNameInGame);
         
                 if (playerNameInGame != null && playerNameInGame.equals(playerName)) {
-                    // Add the matching playerInfo to the list
-                    System.out.println("ADDED TO PARTY MEMBERS INFO");
                     partyMembersInfo.add(playerInfo);
                 }
             }
